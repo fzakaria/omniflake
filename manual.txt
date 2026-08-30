@@ -3,3 +3,4 @@
 
 fzakaria/nix-auto-follow
 fzakaria/nixpkgs-multiverse
+github:roman/nixDir/v3
