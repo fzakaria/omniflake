@@ -28,21 +28,22 @@ numtide/flake-utils                 flake-utils
 NixOS/flake-compat                  flake-compat
 
 # The flakes people write into a NixOS or nix-darwin configuration.
-nix-community/home-manager          home-manager
-nix-darwin/nix-darwin               nix-darwin
+anduril/jetpack-nixos               jetpack-nixos
+Infinidoge/nix-minecraft            nix-minecraft
+Jovian-Experiments/Jovian-NixOS     jovian-nixos
+Maroka-chan/VPN-Confinement         vpn-confinement
+mightyiam/files                     files
 nix-community/disko                 disko
-NixOS/nixos-hardware                nixos-hardware
-nix-community/nixos-anywhere        nixos-anywhere
-nix-community/NixOS-WSL             nixos-wsl
-nix-community/nix-on-droid          nix-on-droid
+nix-community/home-manager          home-manager
 nix-community/impermanence          impermanence
 nix-community/lanzaboote            lanzaboote
-Jovian-Experiments/Jovian-NixOS     jovian-nixos
-anduril/jetpack-nixos               jetpack-nixos
-numtide/system-manager              system-manager
+nix-community/nix-on-droid          nix-on-droid
+nix-community/nixos-anywhere        nixos-anywhere
+nix-community/NixOS-WSL             nixos-wsl
 nix-community/robotnix              robotnix
-Infinidoge/nix-minecraft            nix-minecraft
-Maroka-chan/VPN-Confinement         vpn-confinement
+nix-darwin/nix-darwin               nix-darwin
+NixOS/nixos-hardware                nixos-hardware
+numtide/system-manager              system-manager
 SEIAROTg/quadlet-nix                quadlet-nix
 
 # Development environments and shells.
@@ -94,11 +95,12 @@ yunfachi/denix                      denix
 NixOS/templates                     templates
 the-nix-way/dev-templates           dev-templates
 
-# Derived names that say nothing about the project. Both repositories are
-# in manual.txt because classify.py reads their names as personal configs;
-# the same names are useless as API.
-nixified-ai/flake                   nixified-ai
+# Misclassification of derived names. They say nothing about the project.
+# Such repositories may need to also be listed in manual.txt because classify.py
+# may read their names as personal configs; the same names are useless as API.
 catppuccin/nix                      catppuccin
+nixified-ai/flake                   nixified-ai
+xremap/nix-flake                    xremap
 
 # Bare names taken away. Each of these is the only repository of its name,
 # so the contention rule leaves it holding one that indexed flakes
@@ -109,4 +111,5 @@ catppuccin/nix                      catppuccin
 # 149 mean by firefox-addons is a subdirectory of a GitLab repository that
 # the index does not carry at all.
 akirak/git-hooks                    -
+izzqz/helix                         -
 seadome/firefox-addons              -
