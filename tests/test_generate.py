@@ -64,6 +64,24 @@ class TestUnifyNames(unittest.TestCase):
         self.assertIn("home", indexed_only)
         self.assertNotIn("home", generate.unify_names(self.INDEXED, self.RESOLVED, {}))
 
+    def test_a_line_the_index_has_not_applied_yet_is_not_an_override_key(self):
+        # resolve.py applies names.txt, so a line committed today reaches
+        # the index on the next pipeline run and not before. Until then
+        # the name is still on the repository the line moves it off, and
+        # vouching for it would substitute exactly that repository.
+        pending = {
+            ("nix-community", "nixvim"): "nixvim",
+            ("elsewhere", "nixvim"): "nixvim",
+        }
+        self.assertNotIn(
+            "nixvim-elsewhere",
+            generate.unify_names(
+                self.INDEXED + [row("elsewhere", "nixvim", "nixvim-elsewhere")],
+                self.RESOLVED,
+                pending,
+            ),
+        )
+
     def test_a_flake_outside_the_index_is_never_an_override_key(self):
         keys = generate.unify_names(self.INDEXED, self.RESOLVED, {})
         self.assertNotIn("nixvim-elsewhere", keys)
