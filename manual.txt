@@ -57,3 +57,14 @@ nixified-ai/flake
 # it carries no nix topic, so no query in harvest.py returns it. 38,000
 # stars and a root flake.nix, never once a candidate.
 hyprwm/Hyprland
+
+# Tools written in something other than Nix, and shipping a flake anyway.
+# GitHub calls these Rust, Go and C, and none of the three carries a topic
+# harvest.py queries -- jj and patchelf carry no topics at all, and
+# treefmt's are cli, formatter and treefmt. 36,000 stars between them and
+# a root flake.nix each, never once a candidate.
+# keep-sorted start case=no
+jj-vcs/jj
+NixOS/patchelf
+numtide/treefmt
+# keep-sorted end
