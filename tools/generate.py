@@ -71,6 +71,21 @@ def prune_locks(locks_dir, keys_in_use):
     return removed
 
 
+def duplicate_names(rows):
+    """{name: [rows]} for every attribute name more than one row claims.
+
+    An index entry is keyed by name, so two rows claiming one name means
+    the second silently overwrites the first and a flake leaves the index
+    with nothing to say it was ever there. resolve.py is what keeps names
+    unique; this is a fence against a bug there, checked before anything is
+    written so a run stops rather than shipping a collapsed index.
+    """
+    by_name = collections.defaultdict(list)
+    for row in rows:
+        by_name[row["name"]].append(row)
+    return {name: rows for name, rows in by_name.items() if len(rows) > 1}
+
+
 def unify_names(indexed, resolved, reserved):
     """The index names unification may substitute by input name.
 
@@ -189,10 +204,23 @@ def main():
         "stored_locks": 0,
         "stale": 0,
     }
-    for row in read_jsonl(args.library):
+    library = [row for row in read_jsonl(args.library) if row["name"] not in blocked]
+
+    # Stop before writing anything. A dropped flake is worse than a stopped
+    # run: nothing downstream would report it, and the attribute the losing
+    # row held is API that a consumer is already referring to.
+    collisions = duplicate_names(library)
+    if collisions:
+        for name, rows in sorted(collisions.items()):
+            claimants = ", ".join(f"{r['owner']}/{r['repo']}" for r in rows)
+            print(f"# {name}: claimed by {claimants}", file=sys.stderr)
+        sys.exit(
+            f"generate.py: {len(collisions)} attribute name(s) claimed by more "
+            "than one flake; resolve.py must give each row a unique name"
+        )
+
+    for row in library:
         name = row["name"]
-        if name in blocked:
-            continue
         ref = flake_ref(row)
         keep_refs[ref] = name
         stats["library"] += 1

@@ -1,5 +1,11 @@
-# Flakes re-resolved on every run, one "owner/repo" per line.
+# Flakes re-resolved on every run, one repository per line.
 # See tools/resolve.py.
+#
+# A line is "owner/repo", or the same repository spelled as a flake
+# reference: github:owner/repo, or github:owner/repo/v3 as manual.txt
+# writes a pinned entry. The ref is ignored -- a row is keyed on the
+# repository. A url-shaped reference has no owner to read off, so write
+# that one bare. A line the parser cannot key is warned about and skipped.
 #
 # The default run re-resolves the --refresh-oldest rows resolved longest
 # ago, which at 2,000 a run over ~16,000 rows brings each flake round about

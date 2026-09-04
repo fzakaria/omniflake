@@ -101,6 +101,55 @@ class TestSelectCandidates(unittest.TestCase):
         self.assertNotIn(("c", "merged"), self.select(recheck=set(self.REJECTS)))
 
 
+class TestRepoKey(unittest.TestCase):
+    """Tests which hand-written spellings name a repository, over every
+    form manual.txt uses and the shapes that must be refused rather than
+    guessed at.
+
+    names.txt and always.txt both key on a repository, so this is what
+    decides whether a line reaches a row at all. A refusal is what makes
+    the caller warn; a wrong guess would be a line that silently does
+    nothing."""
+
+    def test_a_bare_entry_names_its_repository(self):
+        self.assertEqual(resolve.repo_key("NixOS/nixpkgs"), ("nixos", "nixpkgs"))
+
+    def test_a_github_reference_names_the_same_repository(self):
+        self.assertEqual(resolve.repo_key("github:NixOS/nixpkgs"), ("nixos", "nixpkgs"))
+
+    def test_a_ref_is_dropped(self):
+        # manual.txt spells a pinned flake this way, and a row is keyed on
+        # the repository whatever revision it is pinned to.
+        self.assertEqual(
+            resolve.repo_key("github:roman/nixDir/v3"), ("roman", "nixdir")
+        )
+
+    def test_another_forge_names_its_repository_too(self):
+        self.assertEqual(resolve.repo_key("gitlab:owner/repo"), ("owner", "repo"))
+        self.assertEqual(resolve.repo_key("sourcehut:~user/repo"), ("~user", "repo"))
+
+    def test_a_subdirectory_is_dropped(self):
+        self.assertEqual(
+            resolve.repo_key("github:owner/repo?dir=sub"), ("owner", "repo")
+        )
+
+    def test_a_url_names_nothing(self):
+        # The owner of a url-shaped reference comes out of its path, which
+        # is manual.py's job. Here it is refused so the line is warned
+        # about and can be written bare.
+        self.assertIsNone(resolve.repo_key("git+https://example.com/team/proj"))
+
+    def test_an_unknown_scheme_names_nothing(self):
+        self.assertIsNone(resolve.repo_key("weird:owner/repo"))
+
+    def test_a_line_with_no_owner_names_nothing(self):
+        self.assertIsNone(resolve.repo_key("nixpkgs"))
+
+    def test_a_bare_line_of_three_segments_names_nothing(self):
+        # Only a reference that said which forge it is on may carry a ref.
+        self.assertIsNone(resolve.repo_key("owner/repo/v3"))
+
+
 class TestLoadAlwaysEntries(unittest.TestCase):
     """Tests the always.txt parser, over lines carrying every shape the file
     permits: an entry, a comment, a trailing comment, blank space and junk."""
@@ -129,10 +178,19 @@ class TestLoadAlwaysEntries(unittest.TestCase):
             resolve.load_always_entries(["NIXOS/NixPkgs"]), {("nixos", "nixpkgs")}
         )
 
+    def test_a_flake_reference_names_the_same_repository_as_a_bare_line(self):
+        # The two spellings mean one repository, so a file may use either.
+        self.assertEqual(
+            resolve.load_always_entries(["github:NixOS/nixpkgs"]),
+            resolve.load_always_entries(["NixOS/nixpkgs"]),
+        )
+
     def test_a_malformed_line_is_dropped_not_fatal(self):
         # A typo in a hand-written file must not take the nightly run down.
         self.assertEqual(
-            resolve.load_always_entries(["nixpkgs", "a/b c", "NixOS/nixpkgs"]),
+            resolve.load_always_entries(
+                ["nixpkgs", "a/b c", "git+https://x.com/a/b", "NixOS/nixpkgs"]
+            ),
             {("nixos", "nixpkgs")},
         )
 

@@ -18,13 +18,14 @@ import resolve
 
 class TestLoadReserved(unittest.TestCase):
     """Tests that names.txt parses, over a file holding a comment, a blank
-    line, an inline comment and mixed case."""
+    line, an inline comment, mixed case and a flake reference."""
 
     FILE = """\
 # a comment
 nix-community/home-manager   home-manager
 
 NixOS/nixpkgs                nixpkgs   # an inline comment
+github:roman/nixDir/v3       nixdir
 """
 
     def setUp(self):
@@ -41,11 +42,25 @@ NixOS/nixpkgs                nixpkgs   # an inline comment
             {
                 ("nix-community", "home-manager"): "home-manager",
                 ("nixos", "nixpkgs"): "nixpkgs",
+                # A line copied out of manual.txt names the repository it
+                # names there, ref and all. See resolve.repo_key.
+                ("roman", "nixdir"): "nixdir",
             },
         )
 
     def test_a_missing_file_reserves_nothing(self):
         self.assertEqual(resolve.load_reserved("/nonexistent/names.txt"), {})
+
+    def test_a_line_that_names_no_repository_is_dropped_not_fatal(self):
+        # A typo in a hand-written file must not take the nightly run down,
+        # and a line the parser cannot key would otherwise sit there doing
+        # nothing without ever saying so.
+        self.assertEqual(
+            resolve.load_reserved_entries(
+                ["nixpkgs nixpkgs", "a/b", "git+https://x.com/a/b n", "a/b n"]
+            ),
+            {("a", "b"): "n"},
+        )
 
 
 class TestChooseName(unittest.TestCase):
@@ -160,6 +175,108 @@ class TestApplyReserved(unittest.TestCase):
         counts = resolve.apply_reserved(known, reserved)
         self.assertEqual(known[("akirak", "git-hooks")]["name"], "git-hooks-akirak")
         self.assertEqual(counts, (1, 0))
+
+
+class TestCountClaims(unittest.TestCase):
+    """Tests that the contention count covers every set a run writes from,
+    over a name claimed once by the database and once by a merged row."""
+
+    def row(self, owner, repo):
+        return {"owner": owner, "repo": repo, "name": ""}
+
+    def test_a_name_one_repository_claims_is_counted_once(self):
+        claims = resolve.count_claims([self.row("nix-community", "disko")], [], [])
+        self.assertEqual(claims["disko"], 1)
+
+    def test_an_externally_resolved_row_contests_a_name(self):
+        # The half of the collapse that a names.txt line cannot fix: a
+        # merged row left out of this count takes a contested bare name
+        # without anything noticing.
+        claims = resolve.count_claims(
+            [self.row("sini", "files")], [], [self.row("someone", "files")]
+        )
+        self.assertEqual(claims["files"], 2)
+
+    def test_a_candidate_contests_a_name(self):
+        claims = resolve.count_claims(
+            [self.row("sini", "files")], [self.row("someone", "files")], []
+        )
+        self.assertEqual(claims["files"], 2)
+
+    def test_one_repository_in_two_sets_is_counted_once(self):
+        # A merged row usually has a known row for the same repository, and
+        # a refreshed candidate always does.
+        claims = resolve.count_claims(
+            [self.row("roman", "nixDir")], [], [self.row("roman", "nixDir")]
+        )
+        self.assertEqual(claims["nixdir"], 1)
+
+
+class TestNameMerged(unittest.TestCase):
+    """Tests that an externally resolved row is named by the same rules as
+    every other row, over the four cases that decide one: a names.txt line,
+    the name the repository already holds, a contested repository name and
+    an uncontested one.
+
+    tools/manual.py gives such a row a provisional name derived from its
+    repository. It sees one flake at a time, so that name is the one thing
+    it cannot decide.
+    """
+
+    def row(self, owner, repo, name):
+        return {"name": name, "owner": owner, "repo": repo}
+
+    def name(self, merged, known=None, reserved=None, claims=None):
+        taken = {e["name"]: k for k, e in (known or {}).items()}
+        resolve.name_merged(
+            merged,
+            known or {},
+            reserved or {},
+            collections.Counter(claims or {}),
+            taken,
+            collections.Counter(),
+        )
+        return merged
+
+    def test_a_names_txt_line_reaches_a_merged_row(self):
+        merged = {("roman", "nixDir"): self.row("roman", "nixDir", "nixdir")}
+        self.name(merged, reserved={("roman", "nixdir"): "nix-dir"})
+        self.assertEqual(merged[("roman", "nixDir")]["name"], "nix-dir")
+
+    def test_a_contested_repository_name_is_qualified(self):
+        # github:sini/files as a merged row used to take "files" whatever
+        # else claimed it, and generate.py wrote one entry for both.
+        merged = {("sini", "files"): self.row("sini", "files", "files")}
+        self.name(merged, claims={"files": 2})
+        self.assertEqual(merged[("sini", "files")]["name"], "files-sini")
+
+    def test_an_uncontested_repository_name_is_taken_bare(self):
+        merged = {("roman", "nixDir"): self.row("roman", "nixDir", "nixdir")}
+        self.name(merged, claims={"nixdir": 1})
+        self.assertEqual(merged[("roman", "nixDir")]["name"], "nixdir")
+
+    def test_a_row_keeps_the_name_its_repository_already_holds(self):
+        # Names are API. A merged row is re-resolved on every run, so
+        # without stickiness the contention rule could move it whenever
+        # some other repository of the same name appeared.
+        known = {("roman", "nixDir"): self.row("roman", "nixDir", "nixdir")}
+        merged = {("roman", "nixDir"): self.row("roman", "nixDir", "nixdir")}
+        self.name(merged, known=known, claims={"nixdir": 2})
+        self.assertEqual(merged[("roman", "nixDir")]["name"], "nixdir")
+
+    def test_a_name_another_repository_holds_is_not_taken(self):
+        known = {("someone", "files"): self.row("someone", "files", "files")}
+        merged = {("sini", "files"): self.row("sini", "files", "files")}
+        self.name(merged, known=known, claims={"files": 1})
+        self.assertEqual(merged[("sini", "files")]["name"], "files-sini")
+
+    def test_a_row_with_no_owner_is_never_qualified_to_a_dangling_dash(self):
+        # manual.py derives an owner for the url-only fetchers precisely so
+        # this fallback reads as something. Guarded here because the name
+        # is only wrong once a second repository contests it.
+        merged = {("example.com", "proj"): self.row("example.com", "proj", "proj")}
+        self.name(merged, claims={"proj": 2})
+        self.assertEqual(merged[("example.com", "proj")]["name"], "proj-example-com")
 
 
 if __name__ == "__main__":

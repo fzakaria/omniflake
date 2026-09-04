@@ -1,7 +1,8 @@
-"""Tests for the override map generate.py writes for unification.
+"""Tests for the override map generate.py writes and the fence it checks
+before writing anything.
 
-The function under test is pure over lists of rows, so no test here reads
-a database, runs Nix or touches the network.
+Both functions under test are pure over lists of rows, so no test here
+reads a database, runs Nix or touches the network.
 """
 
 import os
@@ -90,6 +91,32 @@ class TestUnifyNames(unittest.TestCase):
     def test_the_result_is_sorted(self):
         keys = generate.unify_names(self.INDEXED, self.RESOLVED, self.RESERVED)
         self.assertEqual(keys, sorted(keys))
+
+
+class TestDuplicateNames(unittest.TestCase):
+    """Tests that two rows claiming one attribute are reported, over a
+    library holding a collision and two rows that merely look alike.
+
+    An index entry is keyed by name, so a collision means the second row
+    overwrites the first and a flake leaves the index silently. The fence
+    runs before write_index for that reason."""
+
+    def test_a_library_with_unique_names_has_no_collision(self):
+        rows = [row("sini", "files", "files"), row("someone", "files", "files-someone")]
+        self.assertEqual(generate.duplicate_names(rows), {})
+
+    def test_two_rows_claiming_one_name_are_reported_with_their_claimants(self):
+        rows = [row("sini", "files", "files"), row("someone", "files", "files")]
+        self.assertEqual(generate.duplicate_names(rows), {"files": rows})
+
+    def test_every_colliding_name_is_reported_not_just_the_first(self):
+        rows = [
+            row("a", "x", "x"),
+            row("b", "x", "x"),
+            row("c", "y", "y"),
+            row("d", "y", "y"),
+        ]
+        self.assertEqual(sorted(generate.duplicate_names(rows)), ["x", "y"])
 
 
 if __name__ == "__main__":

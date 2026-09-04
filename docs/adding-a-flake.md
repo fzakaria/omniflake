@@ -2,40 +2,37 @@
 
 ## Adding
 
-`manual.txt` lists flakes the pipeline does not index on its own, including
-flakes outside GitHub. It is read on every run. One entry per line:
+`manual.txt` lists flakes the pipeline does not index on its own. It is read
+on every run, one entry per line:
 
 ```
 nix-community/disko
+github:nix-community/disko
 github:owner/repo/v1.2.3
 gitlab:owner/repo
 ```
 
-- `owner/repo`: a GitHub repository, pinned to its default branch. It
-  becomes a candidate and is resolved by `tools/resolve.py` like a harvested
-  repository.
-- Any other flake reference Nix can fetch, including a specific ref. It is
-  resolved with `nix flake metadata` and pinned to an exact revision.
+A GitHub repository's default branch is resolved like a harvested one
+however it is spelled: the first two lines above are the same entry.
+Anything else — a tag, a subdirectory, another forge — is beyond the GitHub
+API, so `nix flake metadata` pins it instead. Either way the row
+is named by `tools/resolve.py`, so every entry goes through the contention
+rule, `names.txt` and the stickiness rule below.
 
-Write a GitHub repository in the bare form, even though `github:owner/repo`
-names the same thing. The two take different paths through the pipeline. A
-candidate is named by `tools/resolve.py`, so it goes through the contention
-rule, `names.txt` and the stickiness rule below. A resolved reference skips
-all three: `tools/manual.py` names it after its repository and nothing
-else, `names.txt` cannot reach it, and two repositories of the same name
-both arrive as the same attribute. Reach for the prefixed form when the
-bare one cannot say what you mean — another forge, or a tag or branch you
-want pinned instead of the default one.
+`always.txt` and `names.txt` accept the same spellings, since both key on a
+repository: a line copied out of `manual.txt` reaches the row it names, and
+a ref on it is ignored. The exception is a `git+https://` reference, whose
+owner comes out of the url path — write that one as `owner/repo` in those
+two files. A line neither parser can key is warned about on the next run
+rather than sitting there doing nothing.
 
 A flake listed here is also exempt from `tools/classify.py`, which guesses
 from the repository name which flakes are somebody's own machine
-configuration. That guess is wrong in both directions: `catppuccin/nix` is
-a theme, but its repository is named `nix`, which is exactly the shape of
-the personal configs the rule exists to drop. A hand-written line is
-better evidence than the name.
-
-So `manual.txt` means "index this, whatever the pipeline concludes on its
-own", and `blocklist.txt` below is its opposite. Reach for `manual.txt`
+configuration. `catppuccin/nix` is a theme, but its repository is named
+`nix`, which is exactly the shape of the personal configs the rule exists
+to drop, and a hand-written line is better evidence than the name. So
+`manual.txt` means "index this, whatever the pipeline concludes on its
+own", and `blocklist.txt` below is its opposite: reach for `manual.txt`
 when search cannot see a repository _or_ when the classifier is wrong
 about one.
 
@@ -81,7 +78,7 @@ records them in `failures.jsonl` with the error.
 
 Each run re-resolves the 2,000 rows resolved longest ago, so with about
 16,000 flakes a given one comes round roughly every eight days. `always.txt`
-is the exemption: one `owner/repo` per line, re-resolved on every run
+is the exemption: one repository per line, re-resolved on every run
 however recently it was last looked at.
 
 ```
@@ -102,8 +99,7 @@ anything that is not moving fast, and a line for a repository that is not in
 
 An attribute name is derived from the repository name, and a bare name is
 only assigned when one repository claims it. Sixty-one repositories are
-named `home-manager` and 110 are named `flake`; a bare name several
-repositories
+named `home-manager` and 110 are named `flake`; a name several of them
 could equally mean identifies none of them, so a contested name goes to
 nobody and every claimant gets the owner appended: `home-manager-rc-14`.
 
@@ -115,11 +111,10 @@ nix-community/home-manager  home-manager
 nixified-ai/flake           nixified-ai
 ```
 
-The file does two jobs. It hands a contested name to the project people
-mean when they type it, which is the only way `home-manager` or `nixpkgs`
-gets a bare name at all. And it corrects a derived name that says nothing:
-`nixified-ai/flake` derives `flake`, `catppuccin/nix` derives `nix`, and
-both are the repository name doing a poor job of naming the project.
+That does two jobs. It hands a contested name to the project people mean
+when they type it, which is the only way `home-manager` or `nixpkgs` gets a
+bare name at all. And it replaces a derived name that says nothing:
+`nixified-ai/flake` derives `flake` and `catppuccin/nix` derives `nix`.
 
 A name of `-` is the third job, and it takes a bare name away:
 
@@ -127,24 +122,23 @@ A name of `-` is the third job, and it takes a bare name away:
 akirak/git-hooks  -
 ```
 
-The repository is then named `git-hooks-akirak` and nothing holds
-`git-hooks`. Reach for it when one repository holds a name that people
+`akirak/git-hooks` is then named `git-hooks-akirak` and nothing holds
+`git-hooks`. Reach for that when one repository holds a name people
 overwhelmingly use for a different project, which matters beyond the
 attribute: an index name is what `unified` substitutes on, so a bare name
 on the wrong repository rewrites that input for every flake declaring it.
 319 indexed flakes declare `git-hooks` and mean `cachix/git-hooks.nix`.
 
 Leaving a contested repository out is the normal case. It stays reachable
-by its qualified name, which is unambiguous, and a bare name is reserved
-only when it carries real information. `postgres` does not obviously mean
-`supabase/postgres`, so that one is absent on purpose.
+by its qualified name, and a bare name is reserved only when it carries
+real information: `postgres` does not obviously mean `supabase/postgres`.
 
-A name never changes once assigned. A repository that later gains stars does
-not take a bare name from the repository holding it, because consumers refer
-to flakes by name. A `names.txt` line is the one thing that outranks that,
-and it applies on the next run rather than whenever the row next comes round
-for a refresh: the repository the line names takes the name, and whoever was
-holding it is displaced to its qualified form.
+A name never changes once assigned, because consumers refer to flakes by
+name — a repository that later gains stars does not take a bare name from
+the one holding it. A `names.txt` line is the only thing that outranks
+that, and it applies on the next run rather than whenever the row next
+comes round for a refresh: the repository the line names takes the name,
+and whoever was holding it is displaced to its qualified form.
 
 ## Sorted lists
 

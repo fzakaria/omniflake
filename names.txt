@@ -1,5 +1,11 @@
 # Attribute names assigned by hand. See tools/resolve.py.
-# One per line: "owner/repo" then the attribute name, whitespace separated.
+# One per line: the repository then the attribute name, whitespace
+# separated. The repository is "owner/repo", or the same repository
+# spelled as a flake reference: github:owner/repo, or github:owner/repo/v3
+# as manual.txt writes a pinned entry. The ref is ignored -- a row is keyed
+# on the repository. A url-shaped reference has no owner to read off, so
+# write that one bare. A line the parser cannot key is warned about and
+# skipped.
 #
 # A name here overrides the one derived from the repository name, and wins
 # any contention for it. Two jobs:

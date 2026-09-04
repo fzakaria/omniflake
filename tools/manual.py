@@ -7,14 +7,17 @@ committed alongside the database. One entry per line, blank lines and #
 comments ignored:
 
     nix-community/disko          a GitHub repo, pinned to its default branch
+    github:nix-community/disko   the same thing, spelled as a flake ref
     github:owner/repo/v1.2.3     a GitHub repo pinned to a ref you choose
     gitlab:owner/repo            anything else Nix can fetch
     git+https://example.com/x    likewise
 
-A bare owner/repo is emitted as a *candidate*, so resolve.py pins it and
-assigns a sticky name like any harvested repo. Everything else cannot go
+A GitHub repository's default branch is emitted as a *candidate*, however
+it is spelled, so resolve.py pins it and names it like any harvested repo.
+Anything else -- a pinned ref, a subdirectory, another forge -- cannot go
 through the GitHub API, so it is resolved here with `nix flake metadata`
-and emitted as a finished database entry.
+and emitted as a finished database entry. resolve.py names those too; this
+script only says what they are.
 
 Either way the row carries the repository's star count, which is asked for
 here because nothing else in the pipeline will. harvest.py is what records
@@ -35,9 +38,14 @@ rather than a personal config, and a person writing the line down can.
 """
 
 import argparse, json, os, re, subprocess, sys, time
-import urllib.error, urllib.request
+import urllib.error, urllib.parse, urllib.request
 
 BARE = re.compile(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$")
+
+# A github: reference to a plain repository, with no ref, subdirectory or
+# query string. Those name the default branch, which is exactly what a
+# bare owner/repo names.
+PLAIN_GITHUB = re.compile(r"^github:([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)/?$")
 
 # One repository's metadata. A manual list is a handful of lines, so a
 # request each is simpler than the GraphQL batching resolve.py needs and
@@ -46,8 +54,31 @@ REPO_URL = "https://api.github.com/repos/{owner}/{repo}"
 REPO_TIMEOUT_SECONDS = 15
 
 
+def as_bare(entry):
+    """Rewrite github:owner/repo as owner/repo; leave anything else alone.
+
+    The two forms name one thing, the default branch of a GitHub
+    repository, so they must take one path through the pipeline. Without
+    this the prefixed form went to resolve_ref below instead of the GraphQL
+    path, which meant a different name, no names.txt, and no exemption from
+    classify.py -- three surprises for a line a person wrote expecting the
+    spelling not to matter.
+
+    A ref, a subdirectory or a query string makes the reference something
+    the GraphQL path cannot resolve, and those are left as they are.
+    """
+    match = PLAIN_GITHUB.match(entry)
+    if not match:
+        return entry
+    return f"{match.group(1)}/{match.group(2)}"
+
+
 def read_entries(path):
-    """Yield the flake references a manual list names, comments stripped."""
+    """Yield the flake references a manual list names, comments stripped.
+
+    Normalized on the way out, so every caller sees one spelling per
+    repository. See as_bare.
+    """
     try:
         lines = open(path).read().splitlines()
     except FileNotFoundError:
@@ -55,17 +86,18 @@ def read_entries(path):
     for line in lines:
         entry = line.split("#", 1)[0].strip()
         if entry:
-            yield entry
+            yield as_bare(entry)
 
 
 def listed_repos(path):
     """The (owner, repo) pairs a manual list names, lowercased.
 
     Only bare owner/repo entries appear here, because those are the ones
-    that go on to be harvested and named like any other candidate. A full
-    flake ref is resolved by this script instead and carries a "manual"
-    flag on its own row. classify.py reads both to tell which rows a
-    person put in the index by hand.
+    that go on to be harvested and named like any other candidate --
+    github:owner/repo among them, which read_entries has already rewritten.
+    A ref this script resolves itself carries a "manual" flag on its own row
+    instead. classify.py reads both to tell which rows a person put in the
+    index by hand.
     """
     pairs = set()
     for entry in read_entries(path):
@@ -140,6 +172,31 @@ def sanitize(name):
     return out
 
 
+def locked_ref(locked, url):
+    """The (owner, repo) a locked flake reference names.
+
+    github, gitlab and sourcehut hand back both. Every other fetcher hands
+    back a url and nothing else, and resolve.py needs the pair for two
+    things: it keys a row on it, and it falls back to <repo>-<owner> when
+    the repository name is contested. An empty owner makes that fallback
+    read "myrepo-f-". The last two path segments of the url stand in, and
+    the host stands in for the owner when the path holds only one.
+    """
+    owner, repo = locked.get("owner") or "", locked.get("repo") or ""
+    if owner and repo:
+        return owner, repo
+
+    parsed = urllib.parse.urlparse(locked.get("url") or url)
+    parts = [p for p in parsed.path.split("/") if p]
+    # A bare clone url ends in .git; the repository is not called that.
+    if parts and parts[-1].endswith(".git"):
+        parts[-1] = parts[-1][: -len(".git")]
+
+    repo = repo or (parts[-1] if parts else parsed.netloc)
+    owner = owner or (parts[-2] if len(parts) > 1 else parsed.netloc)
+    return owner, repo
+
+
 def resolve_ref(url, stars=0):
     """Pin an arbitrary flake ref with `nix flake metadata`."""
     try:
@@ -167,7 +224,7 @@ def resolve_ref(url, stars=0):
             meta.get("locks", {}).get("nodes", {}).get("root", {}).get("inputs", {})
         ).keys()
     )
-    name = sanitize(locked.get("repo") or url.rstrip("/").split("/")[-1])
+    owner, repo = locked_ref(locked, url)
 
     # Pin to the exact revision. An unpinned url would re-resolve on every
     # consumer lock, defeating the point of shipping a fixed graph.
@@ -182,9 +239,12 @@ def resolve_ref(url, stars=0):
         pinned = url
 
     return {
-        "name": name,
-        "owner": locked.get("owner", ""),
-        "repo": locked.get("repo", name),
+        # Provisional. resolve.py names every row it writes, this one
+        # included, because only it knows which names the database already
+        # hands out and what names.txt says about them.
+        "name": sanitize(repo),
+        "owner": owner,
+        "repo": repo,
         "rev": locked.get("rev", ""),
         # An explicit url wins over the constructed github: ref.
         "url": pinned,

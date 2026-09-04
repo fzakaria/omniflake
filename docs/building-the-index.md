@@ -303,21 +303,17 @@ sample suggests. Run it locally, not in CI.
 
 ### Which Nix
 
-The pipeline is developed and run against upstream Nix, and `check.yml`
-installs that deliberately. Determinate Nix enables lazy trees by default,
-which changes what `nix flake metadata` returns for the same flake: `locked`
-can come back without a `narHash`, because nothing hashed the tree, and the
-store path the metadata reports is never materialised. Pins are made of
-both. `pin.py` covers the difference — a missing hash is recovered with a
-prefetch, and the committed lock is read through `fetchTree` when the path
-is not on disk — so a run under Determinate Nix produces the same rows,
-more slowly.
+Upstream Nix, which is what `check.yml` installs. Determinate Nix turns on
+lazy trees, so `nix flake metadata` can hand back a `locked` with no
+`narHash` and a store path that was never materialised — and a pin is made
+of both. `pin.py` covers that, prefetching the missing hash and reading the
+lock through `fetchTree`, so a run under Determinate Nix produces the same
+rows, more slowly.
 
-Errors are the part that does not carry over. A pin that fails locally with
-a message about the git object or the fetched tree, on a flake with no other
-reason to fail, is worth re-checking on upstream Nix before it is written
-down as a failure. `nix flake metadata --json github:owner/repo` is the
-whole test.
+Errors do not carry over. A pin that fails with a message about the git
+object or the fetched tree, on a flake with no other reason to fail, is
+worth re-checking on upstream Nix before it is recorded as a failure:
+`nix flake metadata --json github:owner/repo` is the whole test.
 
 ## Continuous integration
 

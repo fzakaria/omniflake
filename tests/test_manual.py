@@ -46,6 +46,79 @@ class TestGithubRef(unittest.TestCase):
         self.assertIsNone(manual.github_ref("sourcehut:~user/repo"))
 
 
+class TestAsBare(unittest.TestCase):
+    """Tests which spellings collapse onto a bare owner/repo, over the
+    plain github: form and every neighbouring form that names something a
+    bare entry cannot: a ref, a subdirectory, another forge."""
+
+    def test_a_plain_github_reference_becomes_the_bare_form(self):
+        # The two name one thing, the repository's default branch, so they
+        # have to take one path through the pipeline.
+        self.assertEqual(manual.as_bare("github:owner/repo"), "owner/repo")
+
+    def test_a_trailing_slash_is_still_the_plain_form(self):
+        self.assertEqual(manual.as_bare("github:owner/repo/"), "owner/repo")
+
+    def test_a_pinned_reference_is_left_alone(self):
+        # A ref is not the default branch, so the GraphQL path cannot
+        # resolve it and the entry stays a full reference.
+        self.assertEqual(
+            manual.as_bare("github:roman/nixDir/v3"), "github:roman/nixDir/v3"
+        )
+
+    def test_a_subdirectory_reference_is_left_alone(self):
+        self.assertEqual(
+            manual.as_bare("github:owner/repo?dir=sub"), "github:owner/repo?dir=sub"
+        )
+
+    def test_another_forge_is_left_alone(self):
+        self.assertEqual(manual.as_bare("gitlab:owner/repo"), "gitlab:owner/repo")
+
+    def test_a_bare_entry_is_already_bare(self):
+        self.assertEqual(manual.as_bare("owner/repo"), "owner/repo")
+
+
+class TestLockedRef(unittest.TestCase):
+    """Tests the (owner, repo) a locked reference yields, over a forge that
+    names both and the url-only fetchers that name neither.
+
+    resolve.py keys a row on the pair and falls back to <repo>-<owner> for
+    a contested name, so an empty owner is a name that says nothing."""
+
+    def test_a_forge_that_names_both_is_taken_at_its_word(self):
+        self.assertEqual(
+            manual.locked_ref(
+                {"owner": "roman", "repo": "nixDir"}, "github:roman/nixDir"
+            ),
+            ("roman", "nixDir"),
+        )
+
+    def test_a_url_yields_its_last_two_path_segments(self):
+        self.assertEqual(
+            manual.locked_ref(
+                {"type": "git", "url": "https://git.example.com/team/proj"},
+                "git+https://git.example.com/team/proj",
+            ),
+            ("team", "proj"),
+        )
+
+    def test_a_clone_url_drops_the_git_suffix(self):
+        self.assertEqual(
+            manual.locked_ref(
+                {"type": "git", "url": "https://git.example.com/team/proj.git"}, "x"
+            ),
+            ("team", "proj"),
+        )
+
+    def test_a_single_segment_path_falls_back_to_the_host(self):
+        self.assertEqual(
+            manual.locked_ref(
+                {"type": "git", "url": "https://git.example.com/proj"}, "x"
+            ),
+            ("git.example.com", "proj"),
+        )
+
+
 class TestStarCounts(unittest.TestCase):
     """Tests the map manual.py builds before writing any row, over a list
     holding a GitHub entry, a non-GitHub one and one the lookup fails."""

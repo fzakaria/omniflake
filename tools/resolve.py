@@ -10,7 +10,9 @@ This is incremental. resolved.jsonl is a database that is kept and added
 to, not regenerated: pass --known to skip repos already in it, and
 --refresh to additionally re-pin the ones already known. Rows that were
 resolved outside the GitHub API (tools/manual.py writes them) come in via
---merge and win over any other row for the same repository.
+--merge and win over any other row for the same repository. Their names are
+decided here too, by the same rules as everything else: manual.py sees one
+flake at a time and cannot know what the database already hands out.
 
 A repository that is checked and cannot be used leaves no row in the
 known set, so without --rejects nothing distinguishes "never checked"
@@ -30,7 +32,9 @@ A bare attribute name is only assigned when one repository claims it.
 are named home-manager, 110 are named flake -- and a bare name several
 repositories could equally mean identifies none of them, so a contested
 name goes to nobody and every claimant gets <repo>-<owner>. names.txt is
-where a person overrides that and says which repository a name means.
+where a person overrides that and says which repository a name means. Every
+row goes through this, merged rows included, so a name is unique across the
+database no matter which path resolved the row.
 
 Attribute names are otherwise sticky, which matters because they are API.
 A name already assigned in the known set keeps its owner forever, so a
@@ -156,31 +160,74 @@ def qualified_name(owner, repo):
     return f"{sanitize(repo)}-{sanitize(owner)}"
 
 
+# The flake-reference prefixes that still spell a repository as
+# owner/repo. A url-shaped reference (git+https://host/team/proj) does not:
+# its owner comes out of the path, so it is written bare in these files.
+FORGE_PREFIXES = ("github:", "gitlab:", "sourcehut:")
+
+
+def repo_key(field):
+    """The (owner, repo) a hand-written line names, or None.
+
+    names.txt and always.txt both key on a repository, and a person
+    reaching for either has usually just been reading manual.txt, where the
+    same repository is spelled github:owner/repo or pinned to a ref. Every
+    spelling that names a repository as owner/repo is read as that
+    repository. A ref is dropped: neither file has anything to say about
+    one, and a row is keyed on the repository whatever it is pinned to.
+
+    None is what makes the caller warn, and it is the point of parsing this
+    at all. Both parsers used to look for a "/" and split on the first one,
+    so github:NixOS/nixpkgs passed as the repository "nixpkgs" owned by
+    "github:NixOS", matched nothing, and did nothing on every run without
+    ever saying so.
+
+    Lowercased, because GitHub is case-insensitive about owners and
+    repositories and both files are written by hand.
+    """
+    field = field.split("?", 1)[0].split("#", 1)[0]
+
+    forge = next((p for p in FORGE_PREFIXES if field.startswith(p)), None)
+    if forge:
+        field = field[len(forge) :]
+
+    parts = [p for p in field.split("/") if p]
+
+    # owner/repo, and owner/repo/ref only from a reference that said which
+    # forge it is on. A bare line of three segments is a typo, not a pin.
+    if len(parts) != 2 and not (len(parts) == 3 and forge):
+        return None
+    # Anything still carrying a colon is a scheme this does not know, and
+    # guessing at where its owner and repository are would be worse than
+    # asking for the bare form.
+    if ":" in parts[0] or ":" in parts[1]:
+        return None
+    return parts[0].lower(), parts[1].lower()
+
+
 def load_reserved_entries(lines):
     """Parse names.txt lines into {(owner, repo): attribute name}.
 
-    One entry per line, "owner/repo" then the name, whitespace separated;
-    blank lines and # comments ignored. A name of "-" is read as the
-    repository's qualified name, which is how a line says that a bare name
-    belongs to nobody -- akirak/git-hooks holds "git-hooks" and 319
-    indexed flakes mean cachix/git-hooks.nix by it.
-
-    Keys are lowercased because GitHub is case-insensitive about owners
-    and repositories and the file is written by hand.
+    One entry per line, the repository then the name, whitespace separated;
+    blank lines and # comments ignored. The repository is spelled as
+    repo_key accepts it. A name of "-" is read as the repository's
+    qualified name, which is how a line says that a bare name belongs to
+    nobody -- akirak/git-hooks holds "git-hooks" and 319 indexed flakes
+    mean cachix/git-hooks.nix by it.
     """
     reserved = {}
     for line in lines:
         entry = line.split("#", 1)[0].split()
         if not entry:
             continue
-        if len(entry) != 2 or "/" not in entry[0]:
+        key = repo_key(entry[0]) if len(entry) == 2 else None
+        if key is None:
             print(f"# names: ignoring malformed line: {line!r}", file=sys.stderr)
             continue
-        ref, name = entry
-        owner, repo = ref.split("/", 1)
+        name = entry[1]
         if name == DENY:
-            name = qualified_name(owner, repo)
-        reserved[(owner.lower(), repo.lower())] = name
+            name = qualified_name(*key)
+        reserved[key] = name
     return reserved
 
 
@@ -197,25 +244,21 @@ def load_reserved(path):
 def load_always_entries(lines):
     """Parse always.txt lines into a set of (owner, repo).
 
-    One repository per line as "owner/repo"; blank lines and # comments
-    ignored, and a malformed line is dropped with a warning rather than
-    taken as fatal, since the file is written by hand and a typo in it must
-    not stop the nightly run.
-
-    Keys are lowercased for the same reason load_reserved_entries lowercases
-    its own: GitHub is case-insensitive about owners and repositories, and
-    the spelling in this file need not match the spelling in a resolved row.
+    One repository per line, spelled as repo_key accepts it; blank lines
+    and # comments ignored, and a malformed line is dropped with a warning
+    rather than taken as fatal, since the file is written by hand and a typo
+    in it must not stop the nightly run.
     """
     always = set()
     for line in lines:
         entry = line.split("#", 1)[0].split()
         if not entry:
             continue
-        if len(entry) != 1 or "/" not in entry[0]:
+        key = repo_key(entry[0]) if len(entry) == 1 else None
+        if key is None:
             print(f"# always: ignoring malformed line: {line!r}", file=sys.stderr)
             continue
-        owner, repo = entry[0].split("/", 1)
-        always.add((owner.lower(), repo.lower()))
+        always.add(key)
     return always
 
 
@@ -261,6 +304,56 @@ def apply_reserved(known, reserved):
         row["name"] = qualified_name(row["owner"], row["repo"])
         displaced += 1
     return assigned, displaced
+
+
+def count_claims(*rowsets):
+    """How many repositories claim each derived name.
+
+    Counted over every row the run will write: the database, the candidates
+    it is about to resolve, and the externally resolved rows. A bare name is
+    only handed out when one repository claims it, so a set left out of this
+    count is a set whose rows take a contested name uncontested -- which is
+    how a manual.txt entry named "files" landed on the same attribute as an
+    indexed flake of that name.
+
+    Rows are folded to distinct (owner, repo) pairs first, because the same
+    repository reaches this from more than one set: a known row that is also
+    being refreshed, or an externally resolved row that also has a known row.
+    """
+    pairs = set()
+    for rows in rowsets:
+        pairs |= {(row["owner"], row["repo"]) for row in rows}
+    return collections.Counter(sanitize(repo) for _, repo in pairs)
+
+
+def name_merged(merged, known, reserved, claims, taken, used):
+    """Name the externally resolved rows, in place.
+
+    tools/manual.py resolves what the GitHub API cannot reach -- a pinned
+    ref, a subdirectory, another forge -- and it sees one flake at a time.
+    It cannot know which names the database already hands out, so a row it
+    named after its own repository took a contested bare name uncontested,
+    and names.txt could not reach the row at all.
+
+    So the name is decided here instead, by the same choose_name every
+    other row goes through: names.txt first, then the name the repository
+    already holds, then the contention rule. Called before any candidate is
+    named, because a merged row is authoritative for its repository.
+
+    `taken` and `used` are updated as names are handed out, exactly as the
+    resolve loop updates them.
+    """
+    for key, row in merged.items():
+        prior = known.get(key)
+        name = choose_name(
+            row["owner"], row["repo"], prior, reserved, claims, taken, used
+        )
+        # used counts new assignments only; a row with a prior already
+        # holds its name and is not competing for it.
+        if prior is None:
+            used[sanitize(row["repo"])] += 1
+        taken[name] = key
+        row["name"] = name
 
 
 def choose_name(owner, repo, prior, reserved, claims, taken, used):
@@ -491,12 +584,10 @@ def main():
 
     # Externally resolved rows (tools/manual.py) are authoritative for their
     # repository: the known row, a refresh, and any harvested candidate for
-    # the same repo all yield to them. Their names join the taken set so a
-    # new candidate cannot claim a name a merged row already uses, but a
-    # name some known repo already holds stays with that repo.
-    merged, merged_names = load_known(args.merge)
-    for name, repo_key in merged_names.items():
-        taken.setdefault(name, repo_key)
+    # the same repo all yield to them. They are named below, once the
+    # contention count exists, rather than keeping the provisional name
+    # manual.py gave them.
+    merged, _ = load_known(args.merge)
 
     # Repositories checked before and found unusable. A row that names a
     # repository the database now holds is dropped on sight: success is
@@ -566,19 +657,19 @@ def main():
         for r in refresh
     ]
 
-    # How many repositories claim each derived name, over the database and
-    # the candidates this run will resolve. A name several repositories
-    # claim is never handed out bare, so this has to be counted before any
-    # of them is named.
-    claims = collections.Counter(
-        sanitize(repo)
-        for owner, repo in {(r["owner"], r["repo"]) for r in known.values()}
-        | {(c["owner"], c["repo"]) for c in cands}
-    )
+    # How many repositories claim each derived name. A name several
+    # repositories claim is never handed out bare, so this has to be
+    # counted before any of them is named.
+    claims = count_claims(known.values(), cands, merged.values())
 
     now = int(time.time())
     used = collections.Counter()
     emitted = 0
+
+    # The externally resolved rows take their names first: they are
+    # authoritative for their repository, so a candidate resolved below
+    # cannot take a name out from under one.
+    name_merged(merged, known, reserved, claims, taken, used)
 
     for i in range(0, len(cands), BATCH):
         batch = cands[i : i + BATCH]
