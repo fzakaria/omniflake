@@ -20,14 +20,21 @@
 # which is unambiguous. A name is reserved only when the bare form carries
 # real information: "postgres" does not obviously mean supabase/postgres,
 # so that one is absent on purpose.
+#
+# Each group below is a keep-sorted block, sorted on the repository
+# column; `nix fmt` sorts it and `nix flake check` fails on a group
+# left unsorted.
 
 # Foundations. Substituted into every indexed flake by name, so these are
 # the names that must not drift.
+# keep-sorted start case=no
+NixOS/flake-compat                  flake-compat
 NixOS/nixpkgs                       nixpkgs
 numtide/flake-utils                 flake-utils
-NixOS/flake-compat                  flake-compat
+# keep-sorted end
 
 # The flakes people write into a NixOS or nix-darwin configuration.
+# keep-sorted start case=no
 anduril/jetpack-nixos               jetpack-nixos
 Infinidoge/nix-minecraft            nix-minecraft
 Jovian-Experiments/Jovian-NixOS     jovian-nixos
@@ -45,63 +52,76 @@ nix-darwin/nix-darwin               nix-darwin
 NixOS/nixos-hardware                nixos-hardware
 numtide/system-manager              system-manager
 SEIAROTg/quadlet-nix                quadlet-nix
+# keep-sorted end
 
 # Development environments and shells.
+# keep-sorted start case=no
 cachix/devenv                       devenv
 jetify-com/devbox                   devbox
-numtide/devshell                    devshell
-numtide/blueprint                   blueprint
 nix-community/nix-environments      nix-environments
+numtide/blueprint                   blueprint
+numtide/devshell                    devshell
+# keep-sorted end
 
 # Editors, themes and desktop.
-hyprwm/Hyprland                     hyprland
-nix-community/nixvim                nixvim
-NotAShelf/nvf                       nvf
-nix-community/stylix                stylix
-Gerg-L/spicetify-nix                spicetify-nix
-SenchoPens/base16.nix               base16-nix
-nix-community/kickstart-nix.nvim    kickstart-nix-nvim
-helix-editor/helix                  helix
+# keep-sorted start case=no
 0xc000022070/zen-browser-flake      zen-browser-flake
+Gerg-L/spicetify-nix                spicetify-nix
+helix-editor/helix                  helix
+hyprwm/Hyprland                     hyprland
+nix-community/kickstart-nix.nvim    kickstart-nix-nvim
+nix-community/nixvim                nixvim
+nix-community/stylix                stylix
+NotAShelf/nvf                       nvf
+SenchoPens/base16.nix               base16-nix
+# keep-sorted end
 
 # Tooling: build, deploy, cache, lint.
-nix-community/colmena               colmena
-serokell/deploy-rs                  deploy-rs
-zhaofengli/attic                    attic
-NixOS/hydra                         hydra
-nix-community/nixd                  nixd
-nix-community/nix-init              nix-init
-nix-community/nix-index             nix-index
-utdemir/nix-tree                    nix-tree
-nix-community/comma                 comma
-kamadorueda/alejandra               alejandra
+# keep-sorted start case=no
 DeterminateSystems/flake-checker    flake-checker
+kamadorueda/alejandra               alejandra
+nix-community/colmena               colmena
+nix-community/comma                 comma
+nix-community/nix-index             nix-index
+nix-community/nix-init              nix-init
+nix-community/nixd                  nixd
 nix-community/nixos-cli             nixos-cli
-zhaofengli/nix-homebrew             nix-homebrew
 nix-community/NUR                   nur
+NixOS/hydra                         hydra
 NixOS/nixops                        nixops
+serokell/deploy-rs                  deploy-rs
+utdemir/nix-tree                    nix-tree
+zhaofengli/attic                    attic
+zhaofengli/nix-homebrew             nix-homebrew
+# keep-sorted end
 
 # Language and ecosystem integrations.
+# keep-sorted start case=no
+divnix/digga                        digga
+divnix/std                          std
+hall/kubenix                        kubenix
+juspay/omnix                        omnix
 pyproject-nix/uv2nix                uv2nix
 srid/haskell-flake                  haskell-flake
 terranix/terranix                   terranix
-hall/kubenix                        kubenix
-juspay/omnix                        omnix
-divnix/std                          std
-divnix/digga                        digga
 yunfachi/denix                      denix
+# keep-sorted end
 
 # Templates. NixOS/templates is the referent for the bare name; the other
 # 65 repositories named templates or flake-templates are not.
+# keep-sorted start case=no
 NixOS/templates                     templates
 the-nix-way/dev-templates           dev-templates
+# keep-sorted end
 
 # Derived names that say nothing about the project. Some of these are also
 # in manual.txt, because classify.py reads their repository names as
 # personal configs; the same names are useless as API.
+# keep-sorted start case=no
 catppuccin/nix                      catppuccin
 nixified-ai/flake                   nixified-ai
 xremap/nix-flake                    xremap
+# keep-sorted end
 
 # Bare names taken away. Each of these is the only repository of its name,
 # so the contention rule leaves it holding one that indexed flakes
@@ -111,5 +131,7 @@ xremap/nix-flake                    xremap
 # already answers to git-hooks-nix and cannot answer to both, and the one
 # 149 mean by firefox-addons is a subdirectory of a GitLab repository that
 # the index does not carry at all.
+# keep-sorted start case=no
 akirak/git-hooks                    -
 seadome/firefox-addons              -
+# keep-sorted end

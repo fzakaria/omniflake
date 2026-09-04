@@ -1,6 +1,11 @@
 # Flakes added by hand, outside GitHub search. See tools/manual.py.
 # One per line: "owner/repo", or any flake ref Nix can fetch.
+#
+# Each group of entries is its own keep-sorted block, so a group keeps
+# the comment that explains why those lines are here. `nix fmt` sorts
+# them and `nix flake check` fails on a group left unsorted.
 
+# keep-sorted start case=no
 AdnanHodzic/auto-cpufreq
 b3nj5m1n/xdg-ninja
 dfrankland/envoluntary
@@ -17,20 +22,25 @@ nix-community/nix-direnv
 nix-community/nix-unit
 NotAShelf/flint
 sini/files
+# keep-sorted end
 
 # Reported missing in issue #2. GitHub calls the primary language of these
 # three Rust and Haskell, and none carries a nix topic, so no query in
 # harvest.py can reach them.
+# keep-sorted start case=no
 hgaiser/moonshine
 nix-community/nix-vscode-extensions
 rafaelrc7/wayland-pipewire-idle-inhibit
+# keep-sorted end
 
 # Also from issue #2. These two are language:Nix and would be harvested but
 # for the result cap: their star buckets hold more than 1000 repositories
 # and are not sliced finely enough, so both fall past the end of the search.
 # Listed here so they are indexed no matter what the search returns.
+# keep-sorted start case=no
 Whovian9369/aaru-nix-flake
 Whovian9369/rom-properties-nix-flake
+# keep-sorted end
 
 # Also from issue #2, and found by search already: the theme's repository
 # is named "nix", which classify.py reads as somebody's own machine

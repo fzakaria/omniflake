@@ -145,3 +145,30 @@ to flakes by name. A `names.txt` line is the one thing that outranks that,
 and it applies on the next run rather than whenever the row next comes round
 for a refresh: the repository the line names takes the name, and whoever was
 holding it is displaced to its qualified form.
+
+## Sorted lists
+
+`manual.txt`, `blocklist.txt`, `always.txt` and `names.txt` are all sorted
+by [keep-sorted](https://github.com/google/keep-sorted). Each group of
+entries is its own block, between a `# keep-sorted start case=no` line and
+a `# keep-sorted end` line, so a group keeps the comment that says why its
+lines are there and is still sorted within itself:
+
+```
+# The five foundations. Their revision is substituted into every indexed
+# flake, so these are the pins with the widest reach.
+# keep-sorted start case=no
+hercules-ci/flake-parts
+nix-systems/default
+NixOS/flake-compat
+NixOS/nixpkgs
+numtide/flake-utils
+# keep-sorted end
+```
+
+Add a line anywhere inside the block that fits it and run `nix fmt`, which
+sorts it into place. `nix flake check` fails on a block left unsorted. The
+markers are comments, so every tool that reads these files ignores them.
+`case=no` sorts the way a reader reads: GitHub is case-insensitive about
+owners, and case-sensitive order would file every `NixOS/` line ahead of
+every lowercase one.

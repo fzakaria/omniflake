@@ -14,23 +14,30 @@
 #
 # Keep the list short. Every line is a GraphQL lookup on every run, and the
 # rolling window already covers anything that is not moving fast.
+#
+# Each group below is a keep-sorted block; `nix fmt` sorts it and
+# `nix flake check` fails on a group left unsorted.
 
 # The five foundations. Their revision is substituted into every indexed
 # flake, so these are the pins with the widest reach.
-NixOS/nixpkgs
-numtide/flake-utils
-NixOS/flake-compat
+# keep-sorted start case=no
 hercules-ci/flake-parts
 nix-systems/default
+NixOS/flake-compat
+NixOS/nixpkgs
+numtide/flake-utils
+# keep-sorted end
 
 # The flakes a NixOS or nix-darwin configuration follows closely enough
 # that a stale pin gets noticed.
-nix-community/home-manager
-nix-darwin/nix-darwin
-nix-community/disko
-NixOS/nixos-hardware
-Mic92/sops-nix
-ryantm/agenix
-numtide/treefmt-nix
+# keep-sorted start case=no
 cachix/git-hooks.nix
+Mic92/sops-nix
+nix-community/disko
+nix-community/home-manager
 nix-community/nix-index-database
+nix-darwin/nix-darwin
+NixOS/nixos-hardware
+numtide/treefmt-nix
+ryantm/agenix
+# keep-sorted end

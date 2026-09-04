@@ -11,6 +11,14 @@ treefmt-nix.lib.evalModule pkgs {
   # nobody argues about where a call wraps.
   programs.black.enable = true;
 
+  # The hand-written lists: manual.txt, always.txt, names.txt and
+  # blocklist.txt. Each group of entries in those files is a keep-sorted
+  # block, so a group keeps the comment explaining why its lines are there
+  # and is still sorted. Only .txt: no other file in the tree carries a
+  # marker, and keep-sorted's own default is every file.
+  programs.keep-sorted.enable = true;
+  programs.keep-sorted.includes = [ "*.txt" ];
+
   # Markdown, the workflow files and the site, at the width the docs are
   # written to. proseWrap stays at its default of preserving line breaks: the
   # docs are hand-wrapped prose, and reflowing them makes every diff a

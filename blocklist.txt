@@ -2,3 +2,9 @@
 # Flakes that merely fail to pin are recorded in failures.jsonl by
 # tools/pin.py and need no entry here. Use this for deliberate removals:
 # the row stays in resolved.jsonl so the name remains reserved.
+#
+# The list is one keep-sorted block; `nix fmt` sorts it and `nix flake
+# check` fails on it left unsorted.
+
+# keep-sorted start case=no
+# keep-sorted end
