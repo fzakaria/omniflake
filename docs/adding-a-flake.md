@@ -17,6 +17,16 @@ gitlab:owner/repo
 - Any other flake reference Nix can fetch, including a specific ref. It is
   resolved with `nix flake metadata` and pinned to an exact revision.
 
+Write a GitHub repository in the bare form, even though `github:owner/repo`
+names the same thing. The two take different paths through the pipeline. A
+candidate is named by `tools/resolve.py`, so it goes through the contention
+rule, `names.txt` and the stickiness rule below. A resolved reference skips
+all three: `tools/manual.py` names it after its repository and nothing
+else, `names.txt` cannot reach it, and two repositories of the same name
+both arrive as the same attribute. Reach for the prefixed form when the
+bare one cannot say what you mean — another forge, or a tag or branch you
+want pinned instead of the default one.
+
 A flake listed here is also exempt from `tools/classify.py`, which guesses
 from the repository name which flakes are somebody's own machine
 configuration. That guess is wrong in both directions: `catppuccin/nix` is

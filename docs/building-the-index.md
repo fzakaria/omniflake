@@ -291,6 +291,24 @@ re-pinning, which avoids downloading a tree per flake, but
 of 11,429 rows took 42 minutes at 16 jobs, not the few minutes a short
 sample suggests. Run it locally, not in CI.
 
+### Which Nix
+
+The pipeline is developed and run against upstream Nix, and `check.yml`
+installs that deliberately. Determinate Nix enables lazy trees by default,
+which changes what `nix flake metadata` returns for the same flake: `locked`
+can come back without a `narHash`, because nothing hashed the tree, and the
+store path the metadata reports is never materialised. Pins are made of
+both. `pin.py` covers the difference — a missing hash is recovered with a
+prefetch, and the committed lock is read through `fetchTree` when the path
+is not on disk — so a run under Determinate Nix produces the same rows,
+more slowly.
+
+Errors are the part that does not carry over. A pin that fails locally with
+a message about the git object or the fetched tree, on a flake with no other
+reason to fail, is worth re-checking on upstream Nix before it is written
+down as a failure. `nix flake metadata --json github:owner/repo` is the
+whole test.
+
 ## Continuous integration
 
 `update.yml` runs the pipeline daily, cuts a data release for the databases
