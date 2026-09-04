@@ -85,12 +85,19 @@ def unify_names(indexed, resolved, reserved):
     Contention is counted over the whole database rather than the index,
     because a repository classified personal still means the name does not
     identify one flake.
+
+    A line counts only once the repository it names actually holds the
+    name. resolve.py is what applies names.txt to a row, so between the
+    commit that adds a line and the next pipeline run the index still
+    holds the old assignment: a line handing "helix" to helix-editor/helix
+    would otherwise vouch for an input name that izzqz/helix is still
+    sitting on, which is the substitution the line exists to stop.
     """
     claims = collections.Counter(sanitize(row["repo"]) for row in resolved)
     names = [
         row["name"]
         for row in indexed
-        if (row["owner"].lower(), row["repo"].lower()) in reserved
+        if reserved.get((row["owner"].lower(), row["repo"].lower())) == row["name"]
         or claims[sanitize(row["repo"])] <= 1
     ]
     return sorted(names)
