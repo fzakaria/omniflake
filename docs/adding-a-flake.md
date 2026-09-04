@@ -67,6 +67,27 @@ The row stays in `resolved.jsonl`, so the name stays reserved; the flake is
 no longer indexed. Flakes that fail to pin do not need an entry: `tools/pin.py`
 records them in `failures.jsonl` with the error.
 
+## Refresh cadence
+
+Each run re-resolves the 2,000 rows resolved longest ago, so with about
+16,000 flakes a given one comes round roughly every eight days. `always.txt`
+is the exemption: one `owner/repo` per line, re-resolved on every run
+however recently it was last looked at.
+
+```
+NixOS/nixpkgs
+nix-community/home-manager
+```
+
+Use it for a flake whose pin someone would notice going stale — the five
+foundations, whose revision is substituted into every indexed flake, and the
+handful people track daily. A line here does not consume the rolling
+window's budget, so nothing else is refreshed less often, and `tools/pin.py`
+is keyed by revision, so on a day the flake did not move it costs one
+lookup. Keep the list short anyway: the rolling window already covers
+anything that is not moving fast, and a line for a repository that is not in
+`resolved.jsonl` does nothing.
+
 ## Names
 
 An attribute name is derived from the repository name, and a bare name is

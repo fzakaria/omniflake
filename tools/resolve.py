@@ -42,6 +42,12 @@ named again: the repository the line names takes the name, and whoever
 held it is displaced to its qualified form. A line whose name is "-" asks
 for no bare name at all.
 
+The rolling refresh is bounded rather than time-based, so a flake comes
+round about every eight days. always.txt names the repositories that must
+not wait that long -- nixpkgs, home-manager and the rest of the pins people
+watch. Those are re-resolved every run and do not spend the
+--refresh-oldest budget, so the cadence for everything else is untouched.
+
 Every row's star count comes from the same query that resolves it, so it
 is current as of the run that wrote the row. harvest.py's count decides
 nothing but the order candidates are processed in.
@@ -186,6 +192,41 @@ def load_reserved(path):
     except FileNotFoundError:
         return {}
     return load_reserved_entries(lines)
+
+
+def load_always_entries(lines):
+    """Parse always.txt lines into a set of (owner, repo).
+
+    One repository per line as "owner/repo"; blank lines and # comments
+    ignored, and a malformed line is dropped with a warning rather than
+    taken as fatal, since the file is written by hand and a typo in it must
+    not stop the nightly run.
+
+    Keys are lowercased for the same reason load_reserved_entries lowercases
+    its own: GitHub is case-insensitive about owners and repositories, and
+    the spelling in this file need not match the spelling in a resolved row.
+    """
+    always = set()
+    for line in lines:
+        entry = line.split("#", 1)[0].split()
+        if not entry:
+            continue
+        if len(entry) != 1 or "/" not in entry[0]:
+            print(f"# always: ignoring malformed line: {line!r}", file=sys.stderr)
+            continue
+        owner, repo = entry[0].split("/", 1)
+        always.add((owner.lower(), repo.lower()))
+    return always
+
+
+def load_always(path):
+    """Read always.txt. See load_always_entries for the format."""
+    try:
+        with open(path) as fh:
+            lines = fh.read().splitlines()
+    except FileNotFoundError:
+        return set()
+    return load_always_entries(lines)
 
 
 def apply_reserved(known, reserved):
@@ -340,6 +381,34 @@ def oldest_rejects(rejects, count):
     return {key for key, _ in order[:count]}
 
 
+def select_refresh(known, always, count):
+    """The known rows a bounded run re-resolves, always rows first.
+
+    Two selections joined. A repository named in always.txt is re-resolved
+    on every run, and the rest of the budget goes to the `count` rows
+    resolved longest ago, which is the rolling window that brings the whole
+    database round on a fixed cadence.
+
+    An always row does not spend that budget. What the count buys is the
+    cadence for the other ~16,000 rows -- 2,000 a run is about eight days --
+    and a few dozen pinned repositories must not shorten it. It costs one
+    extra GraphQL batch at most, and a repository whose HEAD did not move
+    costs nothing beyond the lookup.
+    """
+    pinned = [
+        row for key, row in known.items() if (key[0].lower(), key[1].lower()) in always
+    ]
+    pinned_keys = {(r["owner"], r["repo"]) for r in pinned}
+
+    # The age window, minus whatever the always set already took, so a
+    # pinned row that is also stale is not resolved twice in one run.
+    by_age = sorted(
+        (r for k, r in known.items() if k not in pinned_keys),
+        key=lambda r: r.get("resolved_at", 0),
+    )
+    return pinned + by_age[:count]
+
+
 def select_candidates(cands, known, merged, rejects, recheck):
     """The candidates this run will query.
 
@@ -391,6 +460,12 @@ def main():
         help="hand-assigned attribute names; they outrank the derived name",
     )
     ap.add_argument(
+        "--always",
+        default="always.txt",
+        metavar="FILE",
+        help="repos to re-resolve every run, outside the --refresh-oldest window",
+    )
+    ap.add_argument(
         "--recheck-oldest",
         type=int,
         default=1200,
@@ -440,14 +515,18 @@ def main():
     cands.sort(key=lambda c: -c.get("stars", 0))
     cands = select_candidates(cands, known, merged, rejects, recheck)
 
-    # Known rows to look at again: all of them, or the ones resolved longest
-    # ago. A rolling refresh keeps each run's work bounded while every row
-    # comes round on a fixed cadence.
+    # Repositories that must never be a week behind: nixpkgs and the other
+    # foundations, whose revision every indexed flake is unified against,
+    # and the flakes people follow closely enough to notice a stale pin.
+    always = load_always(args.always)
+
+    # Known rows to look at again: all of them, or the always set plus the
+    # ones resolved longest ago. A rolling refresh keeps each run's work
+    # bounded while every row comes round on a fixed cadence.
     if args.refresh:
         refresh = list(known.values())
     else:
-        by_age = sorted(known.values(), key=lambda r: r.get("resolved_at", 0))
-        refresh = by_age[: args.refresh_oldest]
+        refresh = select_refresh(known, always, args.refresh_oldest)
     refresh = [r for r in refresh if (r["owner"], r["repo"]) not in merged]
     refresh_keys = {(r["owner"], r["repo"]) for r in refresh}
 
@@ -465,9 +544,16 @@ def main():
             continue
         out.append(entry)
     rechecked = sum(1 for c in cands if (c["owner"], c["repo"]) in recheck)
+    # How many of the refresh came from always.txt rather than from the age
+    # window, so a line that matches no known repository is visible in the
+    # log as a count that did not go up.
+    pinned = sum(
+        1 for r in refresh if (r["owner"].lower(), r["repo"].lower()) in always
+    )
     print(
         f"# carried over {len(known) - len(refresh)} known, "
-        f"refreshing {len(refresh)}, resolving {len(cands)} new "
+        f"refreshing {len(refresh)} ({pinned} always), "
+        f"resolving {len(cands)} new "
         f"({rechecked} re-checked of {len(rejects)} rejected)",
         file=sys.stderr,
         flush=True,

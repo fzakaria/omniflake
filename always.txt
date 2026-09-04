@@ -1,0 +1,36 @@
+# Flakes re-resolved on every run, one "owner/repo" per line.
+# See tools/resolve.py.
+#
+# The default run re-resolves the --refresh-oldest rows resolved longest
+# ago, which at 2,000 a run over ~16,000 rows brings each flake round about
+# every eight days. That cadence is fine for a flake nobody is watching and
+# wrong for one people follow daily: a week-old nixpkgs pin is visible.
+#
+# A repository listed here is re-resolved regardless of when it was last
+# looked at, and does not spend the --refresh-oldest budget, so the cadence
+# for everything else is unchanged. A repository whose HEAD did not move
+# costs only the lookup, and pin.py is keyed by revision, so a line here
+# adds real work only on the days the flake actually moved.
+#
+# Keep the list short. Every line is a GraphQL lookup on every run, and the
+# rolling window already covers anything that is not moving fast.
+
+# The five foundations. Their revision is substituted into every indexed
+# flake, so these are the pins with the widest reach.
+NixOS/nixpkgs
+numtide/flake-utils
+NixOS/flake-compat
+hercules-ci/flake-parts
+nix-systems/default
+
+# The flakes a NixOS or nix-darwin configuration follows closely enough
+# that a stale pin gets noticed.
+nix-community/home-manager
+nix-darwin/nix-darwin
+nix-community/disko
+NixOS/nixos-hardware
+Mic92/sops-nix
+ryantm/agenix
+numtide/treefmt-nix
+cachix/git-hooks.nix
+nix-community/nix-index-database

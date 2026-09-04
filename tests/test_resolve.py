@@ -101,6 +101,90 @@ class TestSelectCandidates(unittest.TestCase):
         self.assertNotIn(("c", "merged"), self.select(recheck=set(self.REJECTS)))
 
 
+class TestLoadAlwaysEntries(unittest.TestCase):
+    """Tests the always.txt parser, over lines carrying every shape the file
+    permits: an entry, a comment, a trailing comment, blank space and junk."""
+
+    def test_it_reads_one_repository_per_line(self):
+        self.assertEqual(
+            resolve.load_always_entries(
+                ["NixOS/nixpkgs", "nix-community/home-manager"]
+            ),
+            {("nixos", "nixpkgs"), ("nix-community", "home-manager")},
+        )
+
+    def test_comments_and_blank_lines_are_ignored(self):
+        self.assertEqual(
+            resolve.load_always_entries(
+                ["# the foundations", "", "  ", "NixOS/nixpkgs  # the big one"]
+            ),
+            {("nixos", "nixpkgs")},
+        )
+
+    def test_keys_are_lowercased(self):
+        # GitHub is case-insensitive about owners and repositories and this
+        # file is written by hand, so a line must match a resolved row whose
+        # owner GitHub spelled differently.
+        self.assertEqual(
+            resolve.load_always_entries(["NIXOS/NixPkgs"]), {("nixos", "nixpkgs")}
+        )
+
+    def test_a_malformed_line_is_dropped_not_fatal(self):
+        # A typo in a hand-written file must not take the nightly run down.
+        self.assertEqual(
+            resolve.load_always_entries(["nixpkgs", "a/b c", "NixOS/nixpkgs"]),
+            {("nixos", "nixpkgs")},
+        )
+
+
+class TestSelectRefresh(unittest.TestCase):
+    """Tests which known rows a bounded run re-resolves, over a database whose
+    rows were resolved at different times and one of which is pinned to
+    always refresh."""
+
+    KNOWN = {
+        ("NixOS", "nixpkgs"): {"owner": "NixOS", "repo": "nixpkgs", "resolved_at": 900},
+        ("a", "one"): {"owner": "a", "repo": "one", "resolved_at": 100},
+        ("b", "two"): {"owner": "b", "repo": "two", "resolved_at": 200},
+        ("c", "three"): {"owner": "c", "repo": "three", "resolved_at": 300},
+    }
+
+    def keys(self, always, count):
+        return [
+            (r["owner"], r["repo"])
+            for r in resolve.select_refresh(self.KNOWN, always, count)
+        ]
+
+    def test_without_an_always_set_it_is_the_oldest_n(self):
+        self.assertEqual(self.keys(set(), 2), [("a", "one"), ("b", "two")])
+
+    def test_an_always_row_is_refreshed_however_fresh_it_is(self):
+        # nixpkgs was resolved most recently of the four, so the age window
+        # would not reach it for another several runs.
+        self.assertEqual(
+            self.keys({("nixos", "nixpkgs")}, 2),
+            [("NixOS", "nixpkgs"), ("a", "one"), ("b", "two")],
+        )
+
+    def test_an_always_row_does_not_spend_the_age_budget(self):
+        # The rolling cadence for the other 16,000 rows is what the count
+        # buys; a handful of pinned rows must not shorten it.
+        self.assertEqual(len(self.keys({("nixos", "nixpkgs")}, 2)), 3)
+
+    def test_a_row_is_never_selected_twice(self):
+        # An always row old enough to also fall in the age window.
+        selected = self.keys({("a", "one")}, 3)
+        self.assertEqual(len(selected), len(set(selected)))
+
+    def test_a_zero_count_still_refreshes_the_always_set(self):
+        # A smoke run asks for no rolling refresh at all and should still
+        # move the foundations.
+        self.assertEqual(self.keys({("nixos", "nixpkgs")}, 0), [("NixOS", "nixpkgs")])
+
+    def test_a_line_for_a_repository_that_is_not_known_is_inert(self):
+        self.assertEqual(self.keys({("nobody", "nothing")}, 1), [("a", "one")])
+
+
 class TestPruneRejects(unittest.TestCase):
     """Tests that a repository which resolved leaves the ledger, over a
     ledger holding a row for a repository that is in each database."""

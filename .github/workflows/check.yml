@@ -1,7 +1,8 @@
 # Validate a change to the index or the tooling.
 #
-# A pull request that only adds a line to manual.txt, blocklist.txt or
-# names.txt passes without pinning anything: the databases it would change
+# A pull request that only adds a line to manual.txt, blocklist.txt,
+# always.txt or names.txt passes without pinning anything: the databases it
+# would change
 # are fetched rather than committed, so index.json does not move until a
 # pipeline run regenerates it. That run is the nightly update workflow, or
 # tools/update.sh by hand.
