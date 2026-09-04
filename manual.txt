@@ -1,23 +1,22 @@
 # Flakes added by hand, outside GitHub search. See tools/manual.py.
 # One per line: "owner/repo", or any flake ref Nix can fetch.
 
-github:AdnanHodzic/auto-cpufreq
-github:b3nj5m1n/xdg-ninja
-github:dfrankland/envoluntary
-github:emilien-jegou/oyui
-github:fzakaria/nix-auto-follow
-github:fzakaria/nixpkgs-multiverse
-github:guibou/tsui
-github:helix-editor/helix
-github:idursun/jjui
-github:Mic92/direnv-instant
-github:mightyiam/files
-github:nikitawootten/flake-graph
-github:nix-community/nix-direnv
-github:nix-community/nix-unit
-github:NotAShelf/flint
+AdnanHodzic/auto-cpufreq
+b3nj5m1n/xdg-ninja
+dfrankland/envoluntary
+emilien-jegou/oyui
+fzakaria/nix-auto-follow
+fzakaria/nixpkgs-multiverse
 github:roman/nixDir/v3
-github:sini/files
+guibou/tsui
+helix-editor/helix
+idursun/jjui
+Mic92/direnv-instant
+nikitawootten/flake-graph
+nix-community/nix-direnv
+nix-community/nix-unit
+NotAShelf/flint
+sini/files
 
 # Reported missing in issue #2. GitHub calls the primary language of these
 # three Rust and Haskell, and none carries a nix topic, so no query in

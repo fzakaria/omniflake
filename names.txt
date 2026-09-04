@@ -61,6 +61,7 @@ nix-community/stylix                stylix
 Gerg-L/spicetify-nix                spicetify-nix
 SenchoPens/base16.nix               base16-nix
 nix-community/kickstart-nix.nvim    kickstart-nix-nvim
+helix-editor/helix                  helix
 0xc000022070/zen-browser-flake      zen-browser-flake
 
 # Tooling: build, deploy, cache, lint.
@@ -95,9 +96,9 @@ yunfachi/denix                      denix
 NixOS/templates                     templates
 the-nix-way/dev-templates           dev-templates
 
-# Misclassification of derived names. They say nothing about the project.
-# Such repositories may need to also be listed in manual.txt because classify.py
-# may read their names as personal configs; the same names are useless as API.
+# Derived names that say nothing about the project. Some of these are also
+# in manual.txt, because classify.py reads their repository names as
+# personal configs; the same names are useless as API.
 catppuccin/nix                      catppuccin
 nixified-ai/flake                   nixified-ai
 xremap/nix-flake                    xremap
@@ -111,5 +112,4 @@ xremap/nix-flake                    xremap
 # 149 mean by firefox-addons is a subdirectory of a GitLab repository that
 # the index does not carry at all.
 akirak/git-hooks                    -
-izzqz/helix                         -
 seadome/firefox-addons              -
