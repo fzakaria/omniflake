@@ -66,5 +66,6 @@ hyprwm/Hyprland
 # keep-sorted start case=no
 jj-vcs/jj
 NixOS/patchelf
+numtide/disko-zfs
 numtide/treefmt
 # keep-sorted end
