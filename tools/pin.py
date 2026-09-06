@@ -40,6 +40,10 @@ TIMEOUT_SECONDS = 900
 RETRY_DELAY_SECONDS = 30
 # How much of a failing command's stderr is kept for the record.
 ERROR_TAIL_CHARS = 600
+# Nix quotes the offending flake's own files when it fails, and those are
+# arbitrary bytes. Decoding them strictly raises UnicodeDecodeError in the
+# middle of reporting the error, so undecodable bytes are replaced instead.
+DECODE_ERRORS = "replace"
 
 # Attributes Nix adds to `locked` at fetch time that a lock file omits.
 INTERNAL_LOCKED_ATTRS = {"__final"}
@@ -120,7 +124,12 @@ def run_metadata(ref, use_token):
     for attempt in range(2):
         try:
             proc = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=TIMEOUT_SECONDS, env=env
+                cmd,
+                capture_output=True,
+                text=True,
+                errors=DECODE_ERRORS,
+                timeout=TIMEOUT_SECONDS,
+                env=env,
             )
         except subprocess.TimeoutExpired:
             return None, f"timeout after {TIMEOUT_SECONDS}s"
@@ -280,6 +289,7 @@ def committed_lock(store_path, locked, env):
         ["nix", "eval", "--json", "--expr", expr],
         capture_output=True,
         text=True,
+        errors=DECODE_ERRORS,
         timeout=TIMEOUT_SECONDS,
         env=env,
     )
@@ -301,6 +311,7 @@ def run_prefetch(ref, use_token):
             cmd,
             capture_output=True,
             text=True,
+            errors=DECODE_ERRORS,
             timeout=TIMEOUT_SECONDS,
             env=nix_env(use_token),
         )

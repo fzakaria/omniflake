@@ -115,8 +115,13 @@ def verify_pin(pin, scratch_locks):
 def evaluate_new(flake, name):
     """Force one new name through the loader. Returns an error string, or None."""
     expr = f"{flake}#flakes.{name}.{ATTR}"
+    # An evaluation error quotes the flake's own files, which are arbitrary
+    # bytes; undecodable ones are replaced rather than raising.
     proc = subprocess.run(
-        ["nix", "eval", "--raw", expr], capture_output=True, text=True
+        ["nix", "eval", "--raw", expr],
+        capture_output=True,
+        text=True,
+        errors="replace",
     )
     if proc.returncode == 0:
         print(f"ok   {expr}", flush=True)

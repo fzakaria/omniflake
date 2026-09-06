@@ -204,6 +204,8 @@ def resolve_ref(url, stars=0):
             ["nix", "flake", "metadata", "--json", url],
             capture_output=True,
             text=True,
+            # A failing flake's stderr is arbitrary bytes, not valid UTF-8.
+            errors="replace",
             timeout=300,
         )
         if out.returncode != 0:

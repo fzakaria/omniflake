@@ -21,8 +21,14 @@ STDERR_TAIL = 200
 
 def evaluate(flake, attr, name):
     expr = f"{flake}#{attr}.{name}.{ATTR}"
+    # An evaluation error quotes the offending flake's own files, which are
+    # arbitrary bytes, so a strict decode raises UnicodeDecodeError instead
+    # of reporting the failure. Undecodable bytes are replaced.
     proc = subprocess.run(
-        ["nix", "eval", "--raw", expr], capture_output=True, text=True
+        ["nix", "eval", "--raw", expr],
+        capture_output=True,
+        text=True,
+        errors="replace",
     )
     ok = proc.returncode == 0
     print(("ok " if ok else "FAIL ") + expr, flush=True)
