@@ -68,4 +68,5 @@ jj-vcs/jj
 NixOS/patchelf
 numtide/disko-zfs
 numtide/treefmt
+strongtz/edl-ng
 # keep-sorted end
