@@ -7,6 +7,7 @@
 
 # keep-sorted start case=no
 AdnanHodzic/auto-cpufreq
+AvengeMedia/DankMaterialShell
 b3nj5m1n/xdg-ninja
 dfrankland/envoluntary
 emilien-jegou/oyui
@@ -15,6 +16,7 @@ fzakaria/nixpkgs-multiverse
 github:roman/nixDir/v3
 guibou/tsui
 helix-editor/helix
+herdrdev/herdr
 idursun/jjui
 Mic92/direnv-instant
 nikitawootten/flake-graph
@@ -22,6 +24,8 @@ nix-community/nix-direnv
 nix-community/nix-unit
 NotAShelf/flint
 sini/files
+vicinaehq/vicinae
+yechielw/cx-ast.nvim
 # keep-sorted end
 
 # Reported missing in issue #2. GitHub calls the primary language of these
