@@ -1,0 +1,63 @@
+{
+  "nodes": {
+    "cache-server": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788948639,
+        "narHash": "sha256-OfNfs1AqxWbioxFS2b+PE/LDksrIMs8E/YqDn/7vrsk=",
+        "owner": "icedos",
+        "repo": "cache-server",
+        "rev": "be7464f602fd0543aa4c92bb126c926911e853d5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "icedos",
+        "ref": "cache",
+        "repo": "cache-server",
+        "type": "github"
+      }
+    },
+    "icedos": {
+      "inputs": {
+        "cache-server": "cache-server",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1788830970,
+        "narHash": "sha256-gIzvjcqtYFXKHqD77dm9WHguicM6zeuKkx4Thxg9wwU=",
+        "owner": "icedos",
+        "repo": "core",
+        "rev": "cf7786e22f8ba44f87aede24b0b135b1091cf644",
+        "type": "github"
+      },
+      "original": {
+        "owner": "icedos",
+        "repo": "core",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1788881743,
+        "narHash": "sha256-2V9GZGvPfrNzxFozhI9dcqV+c3QdA8YZrvAAzqEB+dI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d6524aaca2ff07876657ae2b323f24be4874944b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "icedos": "icedos"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
