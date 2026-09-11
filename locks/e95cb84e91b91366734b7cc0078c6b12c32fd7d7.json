@@ -299,11 +299,11 @@
     "home-server-nixos-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1788106158,
-        "narHash": "sha256-QjVSvnOI3+B6GZ0PLhz/Ksj/AaLqzPSllT6UXyeu5E8=",
+        "lastModified": 1789107354,
+        "narHash": "sha256-vLz6h9Xz+wk0ZOUVcgThAikm+ldl/uQ7GEr/IRhF/oY=",
         "ref": "refs/heads/main",
-        "rev": "b12c6fae4bda41eb09d12c73a17cb6484f69507c",
-        "revCount": 241,
+        "rev": "95b965c4e7f4ed6acda7e73414f79ea57a47435e",
+        "revCount": 245,
         "type": "git",
         "url": "ssh://git@github.com/pedorich-n/home-server-nixos-secrets"
       },
@@ -375,6 +375,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-multiverse": {
+      "locked": {
+        "lastModified": 1788771595,
+        "narHash": "sha256-4lkKUg1Gevt+rB9XUYdfDAH1l7pitAsy7I/f3LLPwck=",
+        "owner": "fzakaria",
+        "repo": "nixpkgs-multiverse",
+        "rev": "7c81f27f6b082d402d9f949b002258e1128ad8be",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fzakaria",
+        "repo": "nixpkgs-multiverse",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1787736819,
@@ -401,11 +416,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788103940,
-        "narHash": "sha256-RMPkAeo66WBs6WSzDgIPkdE398Et8gRzfJQYx3kUXOM=",
+        "lastModified": 1788668970,
+        "narHash": "sha256-pL/Q2VcKbBBBZSmK7qqF7HW0FTdM89AIGrd1Ki77vXw=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "4af7820e4e99c9bf50fed6e897788e7192a2dd10",
+        "rev": "84b9f369301714091c161aeece85951257786482",
         "type": "github"
       },
       "original": {
@@ -575,6 +590,7 @@
         "nix-github-actions": "nix-github-actions",
         "nix-minecraft": "nix-minecraft",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-multiverse": "nixpkgs-multiverse",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "playit-nixos-module": "playit-nixos-module",
