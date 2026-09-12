@@ -27,6 +27,8 @@ sini/files
 vicinaehq/vicinae
 yechielw/cx-ast.nvim
 yechielw/raise
+0xShug0/audio.cpp
+sophronesis/prpkgs
 # keep-sorted end
 
 # Reported missing in issue #2. GitHub calls the primary language of these
