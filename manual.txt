@@ -6,6 +6,7 @@
 # them and `nix flake check` fails on a group left unsorted.
 
 # keep-sorted start case=no
+0xShug0/audio.cpp
 AdnanHodzic/auto-cpufreq
 AvengeMedia/DankMaterialShell
 b3nj5m1n/xdg-ninja
@@ -24,10 +25,10 @@ nix-community/nix-direnv
 nix-community/nix-unit
 NotAShelf/flint
 sini/files
+sophronesis/prpkgs
 vicinaehq/vicinae
 yechielw/cx-ast.nvim
 yechielw/raise
-sophronesis/prpkgs
 # keep-sorted end
 
 # Reported missing in issue #2. GitHub calls the primary language of these
