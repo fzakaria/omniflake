@@ -21,7 +21,7 @@
     "llama-cpp-ver": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-5h6JyI8rdVXKEZRsDzo3YXo0UhVUSchXBCVrnxfHJ/Y=",
+        "narHash": "sha256-uTcwC5FxhcS8zflTRWkPHVDZ9vmrVu6J9VgYtlummk8=",
         "type": "file",
         "url": "https://api.github.com/repos/ggml-org/llama.cpp/releases/latest"
       },
@@ -32,11 +32,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1788316716,
-        "narHash": "sha256-bc7rSpXIdn9QWGNqfWcPZWOhEVF8NoeAZkWq0XWnf/k=",
+        "lastModified": 1789426278,
+        "narHash": "sha256-GnotcvKtbTMnoVx6G4E7ZdUX6487Dky74dqq3pU7iRk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3ed67ec0a4d3c7ab4ae1f04f8ee8df07bfa506a2",
+        "rev": "efe6f071ede9d21c37462d2d6682d5e670099684",
         "type": "github"
       },
       "original": {
