@@ -14,6 +14,7 @@ dfrankland/envoluntary
 emilien-jegou/oyui
 fzakaria/nix-auto-follow
 fzakaria/nixpkgs-multiverse
+ggml-org/llama.cpp
 github:roman/nixDir/v3
 guibou/tsui
 helix-editor/helix
