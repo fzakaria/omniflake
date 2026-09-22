@@ -1,0 +1,58 @@
+{
+  "nodes": {
+    "data": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790078083,
+        "narHash": "sha256-53HqmomvKvz1JkBo7ZDxjUXQY4ZhaeYZ3vVkMYMT3jo=",
+        "owner": "andre4ik3",
+        "repo": "nix-browser-addons",
+        "rev": "c4987208dea2aeaae71710b6b150b441eb7625bb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "andre4ik3",
+        "ref": "data",
+        "repo": "nix-browser-addons",
+        "type": "github"
+      }
+    },
+    "flake-compat": {
+      "locked": {
+        "lastModified": 1761640442,
+        "narHash": "sha256-AtrEP6Jmdvrqiv4x2xa5mrtaIp3OEe8uBYCDZDS+hu8=",
+        "owner": "nix-community",
+        "repo": "flake-compat",
+        "rev": "4a56054d8ffc173222d09dad23adf4ba946c8884",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1765762245,
+        "narHash": "sha256-akkWdkdmtTxU9PgyT5vsrYYZ89+rwJu44RZsjVP+UuY=",
+        "rev": "c8cfcd6ccd422e41cc631a0b73ed4d5a925c393d",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.1734.c8cfcd6ccd42/nixexprs.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://nixpkgs.flake.andre4ik3.dev"
+      }
+    },
+    "root": {
+      "inputs": {
+        "data": "data",
+        "flake-compat": "flake-compat",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
