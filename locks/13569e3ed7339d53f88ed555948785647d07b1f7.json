@@ -64,11 +64,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1788402531,
-        "narHash": "sha256-vkKkue371vWQIKJBbVM/QTk6XU65PKJ+q39Q6+OKIVk=",
+        "lastModified": 1790415795,
+        "narHash": "sha256-nvpxhuC///gvHzRj9/8A+3+2frKEP8kaabBuQDRO4G4=",
         "owner": "cachix",
         "repo": "devenv",
-        "rev": "30058c52e5b8d7ed7ba4d8e7c793c7726aa7b9a0",
+        "rev": "6d76db3889deba50ba7d906ec710d59fcd86354a",
         "type": "github"
       },
       "original": {
@@ -200,11 +200,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788036898,
-        "narHash": "sha256-3NT3yTvoRT7+rxLDNovpyeTDIJkZlBoO72rcu2x9Y9o=",
+        "lastModified": 1790176416,
+        "narHash": "sha256-acP7QvsB+dHghUeL9AwSSZ3qS//skpqjv484aveg1EQ=",
         "owner": "cachix",
         "repo": "nix",
-        "rev": "b9b81726b38469c55b9706d80d37d6c73cc7f76c",
+        "rev": "bd10d7f563420c6034b9d1dc75c4168fc01e5afc",
         "type": "github"
       },
       "original": {
@@ -278,8 +278,8 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1788297115,
-        "narHash": "sha256-Z+vUNbfd2FIKkWOTkcT7RYlh3oFCnig/d2eXD1SWf2E=",
+        "lastModified": 1790340521,
+        "narHash": "sha256-cRrWlIjVRJ6BHDr9caUdXsZ3owzWIKYHpNmGPHBInIU=",
         "type": "tarball",
         "url": "https://github.com/NixOS/nixpkgs/archive/nixos-26.05.tar.gz"
       },
