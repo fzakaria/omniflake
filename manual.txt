@@ -26,6 +26,7 @@ nikitawootten/flake-graph
 nix-community/nix-direnv
 nix-community/nix-unit
 NotAShelf/flint
+quickshell-mirror/quickshell
 RayLabsHQ/gitea-mirror
 sini/files
 sophronesis/prpkgs

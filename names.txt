@@ -79,6 +79,7 @@ nix-community/kickstart-nix.nvim    kickstart-nix-nvim
 nix-community/nixvim                nixvim
 nix-community/stylix                stylix
 NotAShelf/nvf                       nvf
+quickshell-mirror/quickshell        quickshell
 SenchoPens/base16.nix               base16-nix
 # keep-sorted end
 
