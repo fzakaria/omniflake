@@ -3,11 +3,11 @@
     "nixidae": {
       "flake": false,
       "locked": {
-        "lastModified": 1789561494,
-        "narHash": "sha256-6HV1XxnpsJTw5xCuvE5grBgohyJJJiCJgo+ggBgykok=",
+        "lastModified": 1790602941,
+        "narHash": "sha256-gvlTKOGP6qPtuGVv+hUA7ZkYHPQESq/ujkxIjgR3oQY=",
         "owner": "nixidae",
         "repo": "nixidae",
-        "rev": "485dd7a4d6600609d6cc9180051f6f4fcac6e390",
+        "rev": "40d25fcc3664b97b4612ec4e50eee99f9f929eaf",
         "type": "github"
       },
       "original": {
@@ -18,11 +18,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1789370336,
-        "narHash": "sha256-6RSEDHIWQtesQKWSu5qRai8L2h4KgCgMEfJHstW99G4=",
+        "lastModified": 1790570722,
+        "narHash": "sha256-Avcz96Q+8OkfUIUXipBBVsQn19L622BtKP7mk6M+uls=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c7def046b9a883d46974757852106483d741586f",
+        "rev": "419fe0f449b3fbe3bdd53d9840288db4509ec32e",
         "type": "github"
       },
       "original": {

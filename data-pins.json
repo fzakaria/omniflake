@@ -2,20 +2,20 @@
  "baseUrl": "https://github.com/fzakaria/omniflake/releases/download",
  "files": {
   "candidates.jsonl": {
-   "narHash": "sha256-drIDDQU/yheGiK7+Ti3myMGir2dZMOqivQoEoI649qQ=",
-   "tag": "data-20260927"
+   "narHash": "sha256-EEJm0zOrIUbADbOHeshoVDy5M/qDMHH1jec+rgMjyJs=",
+   "tag": "data-20260928"
   },
   "pins.jsonl": {
-   "narHash": "sha256-9GYup5v7hmLjrfIvgwl3VNIPQAFJJD5kb6Ce3djVy/0=",
-   "tag": "data-20260927"
+   "narHash": "sha256-QP7zbNJeeB/uGYq0me32MqitYrmTgNAiMutks1JcZnU=",
+   "tag": "data-20260928"
   },
   "rejects.jsonl": {
-   "narHash": "sha256-z9KW3Q/XI8hrQ5ZUsbXT6svCF2wqqeHAfGn72iGEuq8=",
-   "tag": "data-20260927"
+   "narHash": "sha256-6KXiEAGJjwvuVGZiuMjFQaFXBDPXpyL+kTSof/hjTCc=",
+   "tag": "data-20260928"
   },
   "resolved.jsonl": {
-   "narHash": "sha256-DYU5S7gJD3Uht5Jk/RmZ2QH6YmWYkTkgdi3TOf7Xv5M=",
-   "tag": "data-20260927"
+   "narHash": "sha256-ts8pDidOXncCanbd6h00vsw5XmzBCEAK9M1M25oWvhE=",
+   "tag": "data-20260928"
   }
  },
  "version": 1
