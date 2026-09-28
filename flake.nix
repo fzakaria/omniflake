@@ -33,7 +33,6 @@
         listToAttrs
         mapAttrs
         readFile
-        replaceStrings
         ;
 
       # One entry per flake: its `locked` attributes and whether a computed
@@ -59,40 +58,13 @@
           ;
       };
 
-      load = import ./lib/load.nix;
-
-      # Mirrors lock_key in tools/pin.py: stored locks are named after the
-      # revision, or the narHash for the rare input type without one.
-      lockKey =
-        locked: if locked ? rev then locked.rev else replaceStrings [ "/" "=" ] [ "_" "" ] locked.narHash;
-
-      storedLock =
-        entry:
-        if entry.lock or false then
-          fromJSON (readFile (./locks + "/${lockKey entry.locked}.json"))
-        else
-          null;
-
-      loadWith =
-        overrides: name:
-        let
-          entry = index.${name};
-        in
-        load {
-          inherit (entry) locked;
-          lock = storedLock entry;
-          inherit overrides;
-        };
-
-      # Every flake under one policy, as a lazy attribute set.
-      withOverrides =
-        overrides:
-        listToAttrs (
-          map (name: {
-            inherit name;
-            value = loadWith overrides name;
-          }) names
-        );
+      # The three policies and the functions they are built from; see
+      # lib/policies.nix.
+      policies = import ./lib/policies.nix {
+        inherit index unifyNames foundations;
+        locks = ./locks;
+      };
+      inherit (policies) loadWith withOverrides unifyAll;
 
       # A flake's qualified name: its flake reference without the revision.
       # This is what the index knows a flake as no matter which attribute
@@ -136,33 +108,6 @@
             groupBy (name: index.${name}.locked.owner) (filter (name: index.${name}.locked.type == forge) names)
           );
 
-      # Every flake under one policy, plus every flake whose name the index
-      # is sure of overriding that name: a graph reaches one home-manager,
-      # one disko, one treefmt-nix, rather than the revision each author
-      # happened to lock.
-      #
-      # The overrides are the set being defined, so a substituted flake's
-      # own graph is unified too, at any depth, rather than stopping at the
-      # five foundations.
-      #
-      # The foundations win over the index, and the caller's `extra` wins
-      # over both. All five foundation names are indexed flakes as well, and
-      # taking them from the index would quietly break the one thing a
-      # consumer controls: `inputs.omniflake.inputs.nixpkgs.follows` reaches
-      # a declared input and nothing else.
-      unifyAll =
-        extra:
-        let
-          fromIndex = listToAttrs (
-            map (name: {
-              inherit name;
-              value = all.${name};
-            }) unifyNames
-          );
-          all = withOverrides (fromIndex // foundations // extra);
-        in
-        all;
-
       # The repository's own tooling, per system. Nothing below is touched
       # by a consumer reaching for a subflake.
       devSystems = [
@@ -192,9 +137,9 @@
       # The three policies, each keyed by attribute name. Bound here rather
       # than in the outputs because the qualified spellings below hand out
       # the same thunks, and a flake evaluated twice is fetched twice.
-      flakesByName = withOverrides foundations;
-      pinnedByName = withOverrides { };
-      unifiedByName = unifyAll { };
+      flakesByName = policies.flakes;
+      pinnedByName = policies.pinned;
+      unifiedByName = policies.unified;
     in
     {
       # omniflake.flakes.<name>: the flake with the five foundations
