@@ -21,11 +21,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1789691287,
-        "narHash": "sha256-vQpuSZ4EFTVby5iXY4MkiTOzuNY71o0rpd90ca8TKoE=",
+        "lastModified": 1790560696,
+        "narHash": "sha256-husp5vZlke3aLA2S1XybAd+DLaOjJkvjDnu+5gCxuks=",
         "owner": "liixini",
         "repo": "skwd-wall",
-        "rev": "f987b2c573aa5c1cd35b0cf7ee86bd2bb211fb81",
+        "rev": "6720414925f36e6908e63d591d2b9ad641016860",
         "type": "github"
       },
       "original": {
