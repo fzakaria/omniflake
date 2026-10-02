@@ -18,27 +18,26 @@
     "basicwebrtc_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1758217802,
-        "narHash": "sha256-+lOdQqb81himYBx9d2kC6o0v7K+0DXxR7I5Pz4TtXrw=",
+        "lastModified": 1758486327,
+        "narHash": "sha256-Gz5fiuSOveKgLlR/J0MFYGFY/iG7uBSZW8y6so1srmU=",
         "owner": "cracker0dks",
         "repo": "basicwebrtc",
-        "rev": "ea2be6e7628713fae744d8034cf77f17e54a22ac",
+        "rev": "8d6ca51b89b34e93dd041bf135c3f79bcfd7d62e",
         "type": "github"
       },
       "original": {
         "owner": "cracker0dks",
-        "ref": "simon/small-ui-improvements",
         "repo": "basicwebrtc",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1758035966,
-        "narHash": "sha256-qqIJ3yxPiB0ZQTT9//nFGQYn8X/PBoJbofA7hRKZnmE=",
+        "lastModified": 1789785513,
+        "narHash": "sha256-B44WL6h0XoLjJ41bUPJk0X5SDinLCII//6EcBLXKiJ0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "8d4ddb19d03c65a36ad8d189d001dc32ffb0306b",
+        "rev": "20b1ddd1aa5ace70c9468305030aa4f9ef79671b",
         "type": "github"
       },
       "original": {
