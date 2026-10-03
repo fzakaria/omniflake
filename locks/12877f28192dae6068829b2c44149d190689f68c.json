@@ -1,0 +1,44 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1790769526,
+        "narHash": "sha256-5AIVFLRcx8YAwbFTVPTs7YhwJH7JyHfAQsvXmpovcXI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "c9fe7d12cd78d1adcd12dd15e24432dde5b155a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "pi-acp-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790290067,
+        "narHash": "sha256-QRwxOtTZOY+Np3PkAoy2o2PrUzEqjItM/372sCPlSMo=",
+        "owner": "svkozak",
+        "repo": "pi-acp",
+        "rev": "b0581c9c1d675e634234674484247008b03d69b4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "svkozak",
+        "repo": "pi-acp",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "pi-acp-src": "pi-acp-src"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
