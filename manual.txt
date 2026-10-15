@@ -30,6 +30,7 @@ nix-community/nix-unit
 NotAShelf/flint
 quickshell-mirror/quickshell
 RayLabsHQ/gitea-mirror
+RimSort/RimSort
 sini/files
 sophronesis/prpkgs
 vicinaehq/vicinae
