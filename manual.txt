@@ -13,6 +13,7 @@ b3nj5m1n/xdg-ninja
 dfrankland/envoluntary
 emilien-jegou/oyui
 epireyn/niri-flake
+first-uninteresting-username/nix-crab
 fzakaria/nix-auto-follow
 fzakaria/nixpkgs-multiverse
 ggml-org/llama.cpp
