@@ -10,10 +10,12 @@
 AdnanHodzic/auto-cpufreq
 AvengeMedia/DankMaterialShell
 b3nj5m1n/xdg-ninja
+blip-net/nix
 dfrankland/envoluntary
 emilien-jegou/oyui
 epireyn/niri-flake
 first-uninteresting-username/nix-crab
+free-explorers/veshell
 fzakaria/nix-auto-follow
 fzakaria/nixpkgs-multiverse
 ggml-org/llama.cpp
