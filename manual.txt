@@ -9,10 +9,10 @@
 0xShug0/audio.cpp
 AceSLS/SLSsteam
 AdnanHodzic/auto-cpufreq
-AvengeMedia/DankMaterialShell
 b3nj5m1n/xdg-ninja
 blip-net/nix
 dfrankland/envoluntary
+duxlabs-dev/dux-shell
 emilien-jegou/oyui
 epireyn/niri-flake
 first-uninteresting-username/nix-crab
