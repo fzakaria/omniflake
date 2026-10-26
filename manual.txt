@@ -15,6 +15,7 @@ blip-net/nix
 dfrankland/envoluntary
 emilien-jegou/oyui
 epireyn/niri-flake
+first-uninteresting-username/nix-crab
 free-explorers/veshell
 fzakaria/nix-auto-follow
 fzakaria/nixpkgs-multiverse
