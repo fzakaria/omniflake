@@ -7,6 +7,7 @@
 
 # keep-sorted start case=no
 0xShug0/audio.cpp
+AceSLS/SLSsteam
 AdnanHodzic/auto-cpufreq
 AvengeMedia/DankMaterialShell
 b3nj5m1n/xdg-ninja
@@ -14,7 +15,6 @@ blip-net/nix
 dfrankland/envoluntary
 emilien-jegou/oyui
 epireyn/niri-flake
-first-uninteresting-username/nix-crab
 free-explorers/veshell
 fzakaria/nix-auto-follow
 fzakaria/nixpkgs-multiverse
