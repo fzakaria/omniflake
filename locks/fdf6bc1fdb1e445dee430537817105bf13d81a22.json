@@ -1,0 +1,44 @@
+{
+  "nodes": {
+    "goose": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792980949,
+        "narHash": "sha256-qywuGZuDknQCxRiX+EkH65tVg9pR5eaFhkfFnzwXLfY=",
+        "owner": "aardappel",
+        "repo": "goose",
+        "rev": "a108677d300cb0e8bbb842c35a353abe67a20c6c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "aardappel",
+        "repo": "goose",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1792773339,
+        "narHash": "sha256-rZLrzrC6i+jnTAlvPZHogKDulY7WWDEv9hJeHieO7Zw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3ec636362e1816bc2f0888fa0fa2c69f1bc9e504",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "goose": "goose",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
