@@ -242,11 +242,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1790950222,
-        "narHash": "sha256-5pIC7xGO441yD7ARxGSrEvydiBnOX4eTeuVuwhCfAyQ=",
+        "lastModified": 1792330818,
+        "narHash": "sha256-B0bIwhU/hOIqap3nRwWXQUB4UvXqQs+PDwfaiSBOaA8=",
         "owner": "chojs23",
         "repo": "concord",
-        "rev": "5bac7a24165d975eb140192d4f62e08ddea282ce",
+        "rev": "ffa2edcca58bc5d376df10723d830f876c2c8eec",
         "type": "github"
       },
       "original": {
@@ -1556,11 +1556,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778210054,
-        "narHash": "sha256-iYINsX0BVDxTXd0z4FzDpBYHZ9fWUtwjG9cKSXwe9Tg=",
+        "lastModified": 1792048409,
+        "narHash": "sha256-ZcwtnGWuY65NQ75W1LZ99gIaFBgC0Sm+TCs1ZEabw0U=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "bc83d66023d19fb301ee98772643b24b6129ef48",
+        "rev": "e9d12b9d8266ed9afdc5add5537ec8b5f789645c",
         "type": "github"
       },
       "original": {
@@ -1718,11 +1718,11 @@
         "systems": "systems_6"
       },
       "locked": {
-        "lastModified": 1791753542,
-        "narHash": "sha256-ii/3foB4LzfaGitZGFhjLmY+t8YhMywPrDDf861SHLw=",
+        "lastModified": 1792130438,
+        "narHash": "sha256-xJ/HBjT7uBt4QDOzOOgwUl9YYHJC1zRw/h2s/GtYozE=",
         "ref": "refs/heads/main",
-        "rev": "fe4ba13a5ab4085763c304fb1187460428d77974",
-        "revCount": 11,
+        "rev": "7c37c76df195f4ab7872db5a507b4f0c463ef95a",
+        "revCount": 18,
         "type": "git",
         "url": "https://codeberg.org/simeonnv/syphoria"
       },
