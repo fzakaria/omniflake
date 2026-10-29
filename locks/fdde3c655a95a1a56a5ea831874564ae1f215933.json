@@ -2,11 +2,11 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1787900134,
-        "narHash": "sha256-VYXO0XZlgj06dxJZRhrD3WoSsvq/c7+/Akyoa22pefw=",
+        "lastModified": 1793110635,
+        "narHash": "sha256-dhoW6VgFWlaodSY5jrBn+CF2FLmaUvDVgM7+C7T2+NM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "83199d0d373dd3ac2b9a1996b1d0263f76ab7a4c",
+        "rev": "31ecbaca1bdefa45dffc409f0250bd8039ea0010",
         "type": "github"
       },
       "original": {
@@ -72,7 +72,7 @@
         "narHash": "sha256-hUNn5QpkNkUiTRVczW7/YizDoP8cYJu1YMqUOxGhgNU=",
         "owner": "sonic-DE",
         "repo": "sonic-activities",
-        "rev": "6ce4c0bdf02e288f41e3dc26b72afd1e6a4adf89",
+        "rev": "6bf54a750b1b7c9b7cda28cf4d5975a5aa48cafd",
         "type": "github"
       },
       "original": {
@@ -89,7 +89,7 @@
         "narHash": "sha256-PQCFkQLtoNTckzaaZHFUVBM3pjUNOrCG8a0FWTvAQsI=",
         "owner": "sonic-DE",
         "repo": "sonic-audio-applet-pulse",
-        "rev": "1a8a0ac9e7503d60cd7b12409824af8977a2cfe5",
+        "rev": "0a36de1fda6acb357f7861334fab90eac434ad04",
         "type": "github"
       },
       "original": {
@@ -106,7 +106,7 @@
         "narHash": "sha256-DR7II5G0TshT1rOLN7W4hrrhXr3F+ZWD28o0ctXV/E0=",
         "owner": "sonic-DE",
         "repo": "sonic-decoration",
-        "rev": "748d4a4632baeb976e1d56778750e897e373a293",
+        "rev": "260214ce20258d9e5adc33e034d0ad993aa452f7",
         "type": "github"
       },
       "original": {
@@ -123,7 +123,7 @@
         "narHash": "sha256-TlbtnItOr9k9ix9AOnPXIbwWeRfzA3urlArG3QUR6O4=",
         "owner": "sonic-DE",
         "repo": "sonic-desktop-interface",
-        "rev": "a6eaad9c9dd5c4ebb986765162c02bfa0a4ef63b",
+        "rev": "105823f21ef5312aea7807c380bc3aea8cfdd233",
         "type": "github"
       },
       "original": {
