@@ -22,11 +22,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791584370,
-        "narHash": "sha256-PBa9qexLi8eOebssvDn3jWxB5v40ZCbGizBAi5Z2bNQ=",
+        "lastModified": 1793497558,
+        "narHash": "sha256-z2eD56XvpVqvuIAmRH1x7h0v8wMAZgbtCB1gjJ65Ckg=",
         "ref": "refs/heads/main",
-        "rev": "cc3bdddda81ebed2c4061c57b02c10f0be288b05",
-        "revCount": 180,
+        "rev": "90426d9ee79b0ec4d213b93a257fc2422bd742b8",
+        "revCount": 184,
         "submodules": true,
         "type": "git",
         "url": "ssh://git@github.com/pedorich-n/airtable-telegram-lessons"
@@ -59,11 +59,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791584464,
-        "narHash": "sha256-WKafEAaLcwAVKidkgnwmqKbYLAOSNn3vxvkSuDQBiQE=",
+        "lastModified": 1793497694,
+        "narHash": "sha256-LF7YbEOS9b5NPawXoPeqNFOy4rcl23ldJUHjGtLMspI=",
         "ref": "refs/heads/main",
-        "rev": "7bdda0eaf073dc438fefecb7e94762b683272472",
-        "revCount": 66,
+        "rev": "aff5420360fd833ba50251d2a0ff6fa824ec4396",
+        "revCount": 69,
         "submodules": true,
         "type": "git",
         "url": "ssh://git@github.com/pedorich-n/book-sync"
@@ -84,11 +84,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791505570,
-        "narHash": "sha256-2yRQ87dNTVr1kauBR6PTlfw7hnm90MAL0ObpA05xOTU=",
+        "lastModified": 1792559340,
+        "narHash": "sha256-IRpSJIA0ijCUDndWSZk7MdbtzAjj30t9mkCQ2VspHdo=",
         "owner": "9001",
         "repo": "copyparty",
-        "rev": "0dc1cb329120743ca85599ba3fba24849f137677",
+        "rev": "1af7efeca858dcfa29f797d7ae93f22eb2fdecf0",
         "type": "github"
       },
       "original": {
@@ -110,11 +110,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791381442,
-        "narHash": "sha256-TQiEqCAQ4bWppfeRGX4O3lwopsgsd2OvcOHTEQRRwEQ=",
+        "lastModified": 1792446739,
+        "narHash": "sha256-eINUtQW48bf9G3EYprthHMll8VDKxaXQP52TZFuwMmE=",
         "owner": "serokell",
         "repo": "deploy-rs",
-        "rev": "45ba3f8c5cb28396fff71671806e2550b464ac86",
+        "rev": "1cec0527bd09074bbee6d4461900ce5d58267217",
         "type": "github"
       },
       "original": {
@@ -130,11 +130,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789770686,
-        "narHash": "sha256-uZkBR7yHdIKUFB5SZdfgh1qkGfI3XmYmI/lTiquxbck=",
+        "lastModified": 1792526520,
+        "narHash": "sha256-3hSJlv8mUVnZPMWK2+CM7a9O+nR6Z4mCh27NfLCmTPc=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "725ea35e410ad83be4931d1bff7e090eacaf3563",
+        "rev": "cedd626e11b635470fa6f9fdb8ad79b0075dd7f9",
         "type": "github"
       },
       "original": {
@@ -186,11 +186,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "lastModified": 1791914995,
+        "narHash": "sha256-Zf/xfQEAasnwnmEfHqW/4hjDE/s44yn2hD4RuVIZRjA=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "rev": "b7a79d3fea1e214f6d668d521cecec0c01e26544",
         "type": "github"
       },
       "original": {
@@ -221,11 +221,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791584418,
-        "narHash": "sha256-AmcIuwpsYamLOHNNilXxlhUiNrwMizkuy/oU7+rUpaI=",
+        "lastModified": 1793497352,
+        "narHash": "sha256-zC3TpJ0g1nqJq+bDCsV3dSi9D8kUKG//khzu/6HTI9Y=",
         "ref": "refs/heads/main",
-        "rev": "cf4efbc0f04f09ee21a997693c37f89682a861c8",
-        "revCount": 70,
+        "rev": "d7f4c4ce6bf2205aec4846b4970b1797bd262d09",
+        "revCount": 73,
         "submodules": true,
         "type": "git",
         "url": "ssh://git@github.com/pedorich-n/geekdo-sync"
@@ -243,11 +243,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791569574,
-        "narHash": "sha256-5sViLmjhTCtBTvhjSXXvd5LDrAFMydFFKZQisjE8Vds=",
+        "lastModified": 1793193205,
+        "narHash": "sha256-X6xa6sGA7RnJQuZGbFMC+K+KToWAlBDCCjJXfTwEPsw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "6b88c12cc6d234de4888f5d21076fb11199d0844",
+        "rev": "095fef2f265c3c0da4fe315efba8f8a04495ab34",
         "type": "github"
       },
       "original": {
@@ -268,6 +268,7 @@
           "home-manager"
         ],
         "home-manager-config-secrets": "home-manager-config-secrets",
+        "jail-nix": "jail-nix",
         "nix-vscode-extensions": [],
         "nixpkgs": [
           "nixpkgs-unstable"
@@ -284,11 +285,11 @@
         "zsh-tab-title": "zsh-tab-title"
       },
       "locked": {
-        "lastModified": 1791627675,
-        "narHash": "sha256-z7XVCD17ewk5i913+AYdXUJHQ+4C1MlsYwU3bYUUyY0=",
+        "lastModified": 1793497573,
+        "narHash": "sha256-WVGu0CWHJzDqSinCh29Vp8xVVcptFAYJxE8R+hs2SSc=",
         "ref": "refs/heads/main",
-        "rev": "91648b2e3befb8bacebd728cc29da9535d60cfbe",
-        "revCount": 561,
+        "rev": "db6a653511735a9cb895a3372bcc5e33788f2271",
+        "revCount": 589,
         "submodules": true,
         "type": "git",
         "url": "ssh://git@github.com/pedorich-n/home-manager-config"
@@ -301,11 +302,11 @@
     "home-manager-config-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1791022079,
-        "narHash": "sha256-wlxaQVj4D3Kz9ZM0qlNxo1UAoDr5upDTYi0uJfbrH7E=",
+        "lastModified": 1793333267,
+        "narHash": "sha256-tkpSBVo7TreAMyfnn6/8ZvHLChljirx71n2jBwIfx8M=",
         "ref": "refs/heads/main",
-        "rev": "7e93ba73ded1dc5b10e4fc0af9d39483b1929dec",
-        "revCount": 6,
+        "rev": "faf8e5a233575c65a50e9648372f148d67eab3af",
+        "revCount": 8,
         "type": "git",
         "url": "ssh://git@github.com/pedorich-n/home-manager-config-secrets"
       },
@@ -318,11 +319,11 @@
     "home-server-nixos-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1791908168,
-        "narHash": "sha256-zetVnXihyos8dDC2eC8Tqlme3i63Tuv9ecc7nmPi4Xw=",
+        "lastModified": 1793619264,
+        "narHash": "sha256-xFdjbmO5vnJ+Oq/cKdpmv8XVuC6FRT0Ar9EOJDJWnUY=",
         "ref": "refs/heads/main",
-        "rev": "6b53e76f989481afa53be822bebabd314aea844a",
-        "revCount": 252,
+        "rev": "adf4f838977a7c57bcdc195c6e719a0e25840876",
+        "revCount": 256,
         "type": "git",
         "url": "ssh://git@github.com/pedorich-n/home-server-nixos-secrets"
       },
@@ -330,6 +331,21 @@
         "ref": "refs/heads/main",
         "type": "git",
         "url": "ssh://git@github.com/pedorich-n/home-server-nixos-secrets"
+      }
+    },
+    "jail-nix": {
+      "locked": {
+        "lastModified": 1788928033,
+        "narHash": "sha256-UQRytK4SsshV1CeX6aKF+P855Sbcqg9aA731eYTakNg=",
+        "owner": "~alexdavid",
+        "repo": "jail.nix",
+        "rev": "7cd53acef3ad51b9c775be759f5643f8d3bcf6eb",
+        "type": "sourcehut"
+      },
+      "original": {
+        "owner": "~alexdavid",
+        "repo": "jail.nix",
+        "type": "sourcehut"
       }
     },
     "nix-github-actions": {
@@ -365,11 +381,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791524776,
-        "narHash": "sha256-6WumjDtfjsgt6eG37ZEOBBZy+YF8p87YXAjhlj49zHQ=",
+        "lastModified": 1793511611,
+        "narHash": "sha256-/FevHQYaMUY3LM6KlvQtYx8kR54zVn+eqFkrduuM3/o=",
         "owner": "Infinidoge",
         "repo": "nix-minecraft",
-        "rev": "050eea3013518e9dba524230456687ff19783af9",
+        "rev": "a4489fcf1d117b39db1366d4712aa94830b39334",
         "type": "github"
       },
       "original": {
@@ -380,11 +396,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1791426274,
-        "narHash": "sha256-MWhktfFtFE8Jl7bf9Pkp7TR5MSdYCjCswSo0Gkb4ywc=",
+        "lastModified": 1793410479,
+        "narHash": "sha256-HzgjxrLY4AEc0044ZuM5CHbLSWLZgDlay1idmzvvpJs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7c8764b7c7b09b34f632464276218ef9090eaa11",
+        "rev": "fa1373130d5a21c040a47c5dbe1913d59ed91808",
         "type": "github"
       },
       "original": {
@@ -394,28 +410,13 @@
         "type": "github"
       }
     },
-    "nixpkgs-multiverse": {
-      "locked": {
-        "lastModified": 1791482513,
-        "narHash": "sha256-+sFUL2Vykuk65yb5MxL2H3ykoJnZF9274v9GncvgO8s=",
-        "owner": "fzakaria",
-        "repo": "nixpkgs-multiverse",
-        "rev": "555490a0100ea823302d845e07a75c493e07c973",
-        "type": "github"
-      },
-      "original": {
-        "owner": "fzakaria",
-        "repo": "nixpkgs-multiverse",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1791456040,
-        "narHash": "sha256-H83yz/do+hjOO0uujHyH8RgtIQP2v7Mw+cLwcZK/xKc=",
+        "lastModified": 1793341285,
+        "narHash": "sha256-Y1CiZ4SoBUjLQyQM/pY+rS2dXD3CHLPstF0lmOc73D4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+        "rev": "1c89083e451e891152365b799595cf7790a43325",
         "type": "github"
       },
       "original": {
@@ -435,11 +436,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791585037,
-        "narHash": "sha256-40ybL3Co4I01pglKHbTba+jFk0UPI3jq+YiRrP4Vqkg=",
+        "lastModified": 1793530281,
+        "narHash": "sha256-f9koD3CejsNCLyw3p0xHPqsK0B8ialNhq3GcWukH5Ts=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "feb6efd95455dc260d11cbee848828c88fa77e6e",
+        "rev": "dd273ba7ba52ea4438633e8ebd4876d296c1176f",
         "type": "github"
       },
       "original": {
@@ -518,11 +519,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791022020,
-        "narHash": "sha256-lGeNjmAjKpDpUiK1P7n8SptFYHbbqcHyykuX7g5HNkk=",
+        "lastModified": 1793530215,
+        "narHash": "sha256-rXBx+z9KptvV+hm987LjbN13uJ5OV2kwY1Q0f78gJVg=",
         "owner": "pedorich-n",
         "repo": "playit-nixos-module",
-        "rev": "4d7dfeeff828816086486b2fd79b657960dc3a87",
+        "rev": "29606a144260bf5c9f864cf218b1f41fa193461f",
         "type": "github"
       },
       "original": {
@@ -544,11 +545,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791170410,
-        "narHash": "sha256-pyru9MpuXRiyq0Bd4q0nHpL4T6HCuZT4B+alcgAYE4A=",
+        "lastModified": 1793303843,
+        "narHash": "sha256-wLiau0yOPONjWSoQNC++uirtJqx2D4hGAWSKU0TfKGc=",
         "owner": "pyproject-nix",
         "repo": "build-system-pkgs",
-        "rev": "953d35d03a51dbecaf3feb3fb679eb63e90ebeb4",
+        "rev": "6171a3484937e14cdf2316ed9a60f1c27b6cb71e",
         "type": "github"
       },
       "original": {
@@ -564,11 +565,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788394333,
-        "narHash": "sha256-xYOP0Xym1eVGUaHFx+eJEaycFGoiCbst3fZf0xFHP78=",
+        "lastModified": 1793240426,
+        "narHash": "sha256-NPWgb6H4arnWyTKvYIys5U0xqd5QY74Z+lyTJA+7XGY=",
         "owner": "pyproject-nix",
         "repo": "pyproject.nix",
-        "rev": "6a8a7881d75b6f98967e7b8069f4ead331384301",
+        "rev": "bf7d4b1d6de61db02fd4e748395634f03006e5de",
         "type": "github"
       },
       "original": {
@@ -609,7 +610,6 @@
         "nix-github-actions": "nix-github-actions",
         "nix-minecraft": "nix-minecraft",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-multiverse": "nixpkgs-multiverse",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "playit-nixos-module": "playit-nixos-module",
@@ -629,11 +629,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791103873,
-        "narHash": "sha256-nFxM+pKoZ8LJAEnUXARyCaOAloWgaW9kZQOSjWzKcTE=",
+        "lastModified": 1793052255,
+        "narHash": "sha256-Y/JIHTnMlOabDfyaSBubWGLDIVGihLEUuoMhFvQKaDo=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "dcd241ba97088c22569d1573286e1b9daad340c0",
+        "rev": "60182817ee048ac94b4c68ea76d5ef2e8aac730d",
         "type": "github"
       },
       "original": {
@@ -649,11 +649,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791103873,
-        "narHash": "sha256-nFxM+pKoZ8LJAEnUXARyCaOAloWgaW9kZQOSjWzKcTE=",
+        "lastModified": 1793052255,
+        "narHash": "sha256-Y/JIHTnMlOabDfyaSBubWGLDIVGihLEUuoMhFvQKaDo=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "dcd241ba97088c22569d1573286e1b9daad340c0",
+        "rev": "60182817ee048ac94b4c68ea76d5ef2e8aac730d",
         "type": "github"
       },
       "original": {
@@ -703,11 +703,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790341335,
-        "narHash": "sha256-wFnDm/o/4OebDlpGFyVXP8DLUx0/gR/jUFuGqmTwsQg=",
+        "lastModified": 1793272761,
+        "narHash": "sha256-3CE1CEwprYlHRlRVkXDkhqec0jjF9Cti7tdk8vVDsCM=",
         "owner": "pyproject-nix",
         "repo": "uv2nix",
-        "rev": "a24323e9e6ecbbf305c238845ff6c612d50467c0",
+        "rev": "c361746c7d630d98b972378290547c8d35542a7a",
         "type": "github"
       },
       "original": {
