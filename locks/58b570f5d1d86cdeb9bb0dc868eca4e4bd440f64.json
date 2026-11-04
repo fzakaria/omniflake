@@ -84,11 +84,11 @@
     "macher-agent": {
       "flake": false,
       "locked": {
-        "lastModified": 1788192946,
-        "narHash": "sha256-xSw5Fztby5vbXmJdhpKmYBaC8S95p3pvqJQ7jmihHfE=",
+        "lastModified": 1793266425,
+        "narHash": "sha256-Kvstg8toVEUBNSojM+VxH9Pzn5qprNCtu1841Z71xlE=",
         "owner": "elij",
         "repo": "macher-agent",
-        "rev": "4f863a1eb5fe38081c1065f45e2e93d95f777d8d",
+        "rev": "58b252cc8c5e6ee0a4b487ccc688b206b503207c",
         "type": "github"
       },
       "original": {
@@ -118,11 +118,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1785435256,
-        "narHash": "sha256-DiUFW0oh0rOEc0aUKUVh6i2tSYtuszCgqCJnDMV1XQQ=",
+        "lastModified": 1793121054,
+        "narHash": "sha256-ldhSZuDlcjcz2iSqTcE02G6o7YGcnADvGaqZ1EeFQ3Q=",
         "owner": "jwiegley",
         "repo": "ob-gptel",
-        "rev": "4961120b7fc6bd2e2debd73f84cdef360188d3c7",
+        "rev": "65646efa49c8ba15177fcc47a69be20e314c4488",
         "type": "github"
       },
       "original": {
