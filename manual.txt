@@ -9,6 +9,7 @@
 0xShug0/audio.cpp
 AceSLS/SLSsteam
 AdnanHodzic/auto-cpufreq
+akitaonrails/ai-memory
 b3nj5m1n/xdg-ninja
 blip-net/nix
 dfrankland/envoluntary
