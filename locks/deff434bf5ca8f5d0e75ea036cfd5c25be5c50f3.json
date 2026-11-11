@@ -119,17 +119,34 @@
     "pstack": {
       "flake": false,
       "locked": {
-        "lastModified": 1792841177,
-        "narHash": "sha256-AxVmRX5E/WFAFAYdYLXXuiVthKDO8CB+tpc5xbFNkBA=",
+        "lastModified": 1793922331,
+        "narHash": "sha256-hOC/j9NLWR5B4vgkmiQ00EfIYXocZRd6EiGixNlIbQg=",
         "owner": "br1anchen",
         "repo": "open-pstack",
-        "rev": "e274dd7d117a55cbd40686ff0346276e2914e3d3",
+        "rev": "bdf7f7dc16a4be4cefade7e4f3bb0424abd4d2bf",
         "type": "github"
       },
       "original": {
         "owner": "br1anchen",
         "repo": "open-pstack",
         "type": "github"
+      }
+    },
+    "rex": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793377904,
+        "narHash": "sha256-GmWf210OgpSfM532AGtm748vM68QltaA8MlqtqHgiy8=",
+        "type": "tarball",
+        "url": "https://pkgs.superlogical.com/rex/nix/preview/0.1.0-preview.12.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://pkgs.superlogical.com/rex/nix/preview.tar.gz"
       }
     },
     "root": {
@@ -140,6 +157,7 @@
         "nixpkgs": "nixpkgs",
         "plannotator-src": "plannotator-src",
         "pstack": "pstack",
+        "rex": "rex",
         "vim-herdr-navigation-src": "vim-herdr-navigation-src"
       }
     },
