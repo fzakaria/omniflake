@@ -1,0 +1,66 @@
+{
+  "nodes": {
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794251182,
+        "narHash": "sha256-R2sZBXiOJo3HAnvTiVkbbHDJy//JMlAwUKEiPbfqPXk=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "6eb2d33d1d0c95a37ef6443c88e6c1686012ee8b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-26.05",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1794165970,
+        "narHash": "sha256-XuAV2cUwaod3Bt4XFVqiXz3v1w2ex16W6Sv4S7EWres=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ac588ef1c914865dad517b337ea0eb9694a4021c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "oh-my-rime": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794105102,
+        "narHash": "sha256-IUb2UxmNY2n3wzIJ2O0xiEeKIcXcnFPdxKm8EafHfZg=",
+        "ref": "refs/heads/main",
+        "rev": "1d90ca226f6c53dbc74f290de19dbd1c5ea663dd",
+        "revCount": 356,
+        "type": "git",
+        "url": "https://cnb.cool/Mintimate/rime/oh-my-rime"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://cnb.cool/Mintimate/rime/oh-my-rime"
+      }
+    },
+    "root": {
+      "inputs": {
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs",
+        "oh-my-rime": "oh-my-rime"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
