@@ -30,6 +30,7 @@ manic-systems/rom
 Mexit/MultiOS-USB
 Mic92/direnv-instant
 Mic92/fast-nix-gc
+Mic92/nix-tarmac
 nab138/iloader
 nikitawootten/flake-graph
 nix-community/nix-direnv
