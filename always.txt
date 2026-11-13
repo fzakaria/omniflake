@@ -47,3 +47,10 @@ NixOS/nixos-hardware
 numtide/treefmt-nix
 ryantm/agenix
 # keep-sorted end
+
+# Flakes that hand out nixpkgs channels. nixpkgs-multiverse carries the
+# release and unstable channel tips in its index, so `flakeAt "26.05"`
+# through omniflake is only as fresh as this pin.
+# keep-sorted start case=no
+fzakaria/nixpkgs-multiverse
+# keep-sorted end
