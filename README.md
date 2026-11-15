@@ -38,11 +38,11 @@ something from it.
 
 <!-- BEGIN index-status -->
 
-- **18,685 flakes** in the index, from **18,907 in the library tier** (239 could not be pinned, 0 not yet pinned)
-- 1,829 ship no usable lock file and use one computed by Nix
+- **18,719 flakes** in the index, from **18,942 in the library tier** (240 could not be pinned, 0 not yet pinned)
+- 1,830 ship no usable lock file and use one computed by Nix
 - 17 held at an earlier revision, their newer one having failed to pin
 - One `follows` line in your flake redirects `nixpkgs` in every one of them
-- Last updated 2026-11-14
+- Last updated 2026-11-15
 <!-- END index-status -->
 
 ## Quickstart
