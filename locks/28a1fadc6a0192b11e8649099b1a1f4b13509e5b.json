@@ -198,11 +198,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793018791,
-        "narHash": "sha256-COulJsQjLBT5Ap346FfTd+7fa/GaFj1+E9gXO333hbY=",
+        "lastModified": 1793153342,
+        "narHash": "sha256-gbocXR6TN/+ZzhO98QYf0VMWp9tU14G5DiSKQPBWbwk=",
         "owner": "GDR",
         "repo": "learnharness",
-        "rev": "2cf47a672a6edbaabb4d529980316022e6f4a6cd",
+        "rev": "9615555225c805ec2a1b0c5efea0eefea290bb93",
         "type": "github"
       },
       "original": {
