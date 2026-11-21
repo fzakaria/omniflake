@@ -319,11 +319,11 @@
     "home-server-nixos-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1793619264,
-        "narHash": "sha256-xFdjbmO5vnJ+Oq/cKdpmv8XVuC6FRT0Ar9EOJDJWnUY=",
+        "lastModified": 1795084822,
+        "narHash": "sha256-TNY6XlwqfPpIEnF1gCA2/0HDW7Lrgcidp2WJafYTHLs=",
         "ref": "refs/heads/main",
-        "rev": "adf4f838977a7c57bcdc195c6e719a0e25840876",
-        "revCount": 256,
+        "rev": "40612eb4a5d15d75311e086136ae98fdeebea187",
+        "revCount": 261,
         "type": "git",
         "url": "ssh://git@github.com/pedorich-n/home-server-nixos-secrets"
       },
@@ -410,6 +410,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-netdata": {
+      "locked": {
+        "lastModified": 1794232652,
+        "narHash": "sha256-vOME/m5NUY3vcpcCyf0E/2NIA+YJzveB8LhqtyS+CH8=",
+        "owner": "rhoriguchi",
+        "repo": "nixpkgs",
+        "rev": "706bd2185d97156df72ba9eea4db1778ca1f7420",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rhoriguchi",
+        "ref": "netdata",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1793341285,
@@ -436,11 +452,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793530281,
-        "narHash": "sha256-f9koD3CejsNCLyw3p0xHPqsK0B8ialNhq3GcWukH5Ts=",
+        "lastModified": 1793958576,
+        "narHash": "sha256-J3TkKkxYp0f8fOB2pDbdETJsidtdo50F2bpQqPXduZk=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "dd273ba7ba52ea4438633e8ebd4876d296c1176f",
+        "rev": "ae41fcc8cb619dfa1d300c4e63308bf4d8028bb9",
         "type": "github"
       },
       "original": {
@@ -519,11 +535,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793530215,
-        "narHash": "sha256-rXBx+z9KptvV+hm987LjbN13uJ5OV2kwY1Q0f78gJVg=",
+        "lastModified": 1794619036,
+        "narHash": "sha256-qtEvNBtgRcpC+K84zMprIkn82U902RLN7HhF2xkyGuk=",
         "owner": "pedorich-n",
         "repo": "playit-nixos-module",
-        "rev": "29606a144260bf5c9f864cf218b1f41fa193461f",
+        "rev": "2174c0960ca53c987b3dd17e5d9dadb8f686dea4",
         "type": "github"
       },
       "original": {
@@ -610,6 +626,7 @@
         "nix-github-actions": "nix-github-actions",
         "nix-minecraft": "nix-minecraft",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-netdata": "nixpkgs-netdata",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "playit-nixos-module": "playit-nixos-module",
