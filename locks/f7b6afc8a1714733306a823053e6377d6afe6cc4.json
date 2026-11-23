@@ -490,6 +490,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1793701507,
+        "narHash": "sha256-bkaQlWI7wRHWe8xwevLU2NJ0BYfpZoGM5NUyQjAIYzw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5167857971200377037754d88e5af01bce5ca80b",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "release-26.05",
+        "type": "indirect"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1793341285,
@@ -629,6 +644,7 @@
         "hyprland": "hyprland",
         "import-tree": "import-tree",
         "nixpkgs": "nixpkgs_3",
+        "nixpkgs-stable": "nixpkgs-stable",
         "nixvim": "nixvim",
         "noctalia": "noctalia",
         "privateConfig": "privateConfig",

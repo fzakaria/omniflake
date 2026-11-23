@@ -84,11 +84,11 @@
     "macher-agent": {
       "flake": false,
       "locked": {
-        "lastModified": 1793266425,
-        "narHash": "sha256-Kvstg8toVEUBNSojM+VxH9Pzn5qprNCtu1841Z71xlE=",
+        "lastModified": 1795244471,
+        "narHash": "sha256-/WJVufp6FJ5ZjduMldRFQNP/oxSgiEUwgGAY48Z/t3E=",
         "owner": "elij",
         "repo": "macher-agent",
-        "rev": "58b252cc8c5e6ee0a4b487ccc688b206b503207c",
+        "rev": "e17a50b344fead8fe5527fa37848820c4694da9a",
         "type": "github"
       },
       "original": {
