@@ -15,6 +15,42 @@
         "type": "github"
       }
     },
+    "dither-accounts": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795213277,
+        "narHash": "sha256-IN9tnBjXvim//FOxjvEb6lAWP67ZWdWqkCU3mN/coNU=",
+        "owner": "libdither",
+        "repo": "dither-accounts",
+        "rev": "2f8f0f2772a181921a67641577ada546cbb46537",
+        "type": "github"
+      },
+      "original": {
+        "owner": "libdither",
+        "repo": "dither-accounts",
+        "type": "github"
+      }
+    },
+    "dither-chat": {
+      "inputs": {
+        "nixpkgs": [
+          "latest"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795217952,
+        "narHash": "sha256-254wQTSpzNg4u+Kz+ZeASi7I3SCPX/edvW3YkVTG4Qg=",
+        "owner": "libdither",
+        "repo": "dither-chat",
+        "rev": "764d10eed1a1a7daf2a323bd853c656c18c7bdd6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "libdither",
+        "repo": "dither-chat",
+        "type": "github"
+      }
+    },
     "drainhound": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -185,6 +221,46 @@
       "original": {
         "owner": "nix-community",
         "repo": "impermanence",
+        "type": "github"
+      }
+    },
+    "japanese-weave": {
+      "inputs": {
+        "nixpkgs": [
+          "latest"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795204770,
+        "narHash": "sha256-aO5JCjBhFrirrsx6qu9WIPjJ63EtFv3IF/kPO1XeLmc=",
+        "owner": "zyansheep",
+        "repo": "japanese-weave",
+        "rev": "7d6a936df5a56a44c1df45d2bddbd80143f16eb6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zyansheep",
+        "repo": "japanese-weave",
+        "type": "github"
+      }
+    },
+    "kaomoji-picker": {
+      "inputs": {
+        "nixpkgs": [
+          "latest"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794686393,
+        "narHash": "sha256-6dFBBfsRxjn6EbF0wXut/CRKV9gXf2dXwxzngz4wokE=",
+        "owner": "zyansheep",
+        "repo": "kaomoji-picker",
+        "rev": "1fe593fa8fa25db3b4b6a92fbdfd7356b93e7370",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zyansheep",
+        "repo": "kaomoji-picker",
         "type": "github"
       }
     },
@@ -431,12 +507,16 @@
     },
     "root": {
       "inputs": {
+        "dither-accounts": "dither-accounts",
+        "dither-chat": "dither-chat",
         "drainhound": "drainhound",
         "flake-parts": "flake-parts",
         "haumea": "haumea",
         "home": "home",
         "home-unstable": "home-unstable",
         "impermanence": "impermanence",
+        "japanese-weave": "japanese-weave",
+        "kaomoji-picker": "kaomoji-picker",
         "lanzaboote": "lanzaboote",
         "latest": "latest",
         "nixos-generators": "nixos-generators",
@@ -477,11 +557,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793307016,
-        "narHash": "sha256-WmcqT60yE/AoW57VqpBpkNf1812D+B4HNB/Kl3SIud8=",
+        "lastModified": 1795219206,
+        "narHash": "sha256-69FZgp2vv+pDv7hFsamDXNJVSzexYp02KIN0QFf8Wsc=",
         "owner": "zyansheep",
         "repo": "UpdateManager",
-        "rev": "641a2dadff3293b226053976d386e1cf00225659",
+        "rev": "6543d53bb67ba9fc9d1fb1a8bce6a2a0d8896c13",
         "type": "github"
       },
       "original": {
