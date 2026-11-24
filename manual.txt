@@ -41,6 +41,7 @@ RayLabsHQ/gitea-mirror
 RimSort/RimSort
 sini/files
 sophronesis/prpkgs
+unslothai/llama.cpp
 vicinaehq/vicinae
 yechielw/cx-ast.nvim
 yechielw/raise
